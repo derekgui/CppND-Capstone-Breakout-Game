@@ -1,11 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
 
-if(NOT TESTING)
-    set(TESTING "notest")
-endif()
-
-message("TESTING = ${TESTING}")
-
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
