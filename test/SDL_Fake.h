@@ -18,6 +18,7 @@ public:
     MOCK_METHOD0(SDL_Quit, void(void));
     MOCK_METHOD0(SDL_GetError, const char *(void));
     MOCK_METHOD6(SDL_CreateWindow, SDL_Window *(const char *, int, int, int, int, Uint32));
+    MOCK_METHOD1(SDL_DestroyWindow, void(SDL_Window *));
 };
 
 class TestFixture : public ::testing::Test
@@ -46,6 +47,11 @@ SDL_Window *SDL_CreateWindow(const char *title,
                              Uint32 flags)
 {
     return TestFixture::_SDL_Mock->SDL_CreateWindow(title, x, y, w, h, flags);
+}
+
+void SDL_DestroyWindow(SDL_Window *window)
+{
+    return TestFixture::_SDL_Mock->SDL_DestroyWindow(window);
 }
 
 #endif

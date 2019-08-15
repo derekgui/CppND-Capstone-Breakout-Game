@@ -48,6 +48,7 @@ public:
     bool isActive() const { return m_isActive; }
     void destroy()
     {
+        SDL_DestroyWindow(m_window);
         SDL_Quit();
     }
 
@@ -133,4 +134,10 @@ TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
     wnd.init();
 
     ASSERT_THAT(wnd.isActive(), true);
+}
+
+TEST_F(MainGameWindow, DestroySDLWindowWhenDestroy)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_DestroyWindow(_)).Times(1);
+    wnd.destroy();
 }
