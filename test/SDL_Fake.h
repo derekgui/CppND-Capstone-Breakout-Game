@@ -8,8 +8,6 @@ using namespace ::testing;
 typedef struct SDL_Window SDL_Window;
 typedef uint32_t Uint32;
 
-static constexpr int SDL_INIT_VEDIO = 0;
-
 class SDL_Mock
 {
 public:
