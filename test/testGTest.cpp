@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "SDL_Fake.h"
 #include <exception>
+#include <iostream>
 
 using ::testing::_;
 using ::testing::Eq;
@@ -26,20 +27,25 @@ public:
     void init()
     {
         if (SDL_Init(SDL_INIT_VEDIO) < 0)
-            throw SDLInitFailedExpection();
-
-        m_window = SDL_CreateWindow("Breakout Game",
-                                    SDL_WINDOWPOS_UNDEFINED,
-                                    SDL_WINDOWPOS_UNDEFINED,
-                                    SCREEN_WIDTH,
-                                    SCREEN_HEIGHT,
-                                    SDL_WINDOW_SHOWN);
-        if (NULL == m_window)
-            throw SDLCreateWindowFailedExpection();
-        m_isActive = true;
+            std::cerr << "SDL could not initialized! SDL_Error: "
+                      << SDL_GetError() << "\n";
+        else
+        {
+            m_window = SDL_CreateWindow("Breakout Game",
+                                        SDL_WINDOWPOS_UNDEFINED,
+                                        SDL_WINDOWPOS_UNDEFINED,
+                                        SCREEN_WIDTH,
+                                        SCREEN_HEIGHT,
+                                        SDL_WINDOW_SHOWN);
+            if (NULL == m_window)
+                std::cerr << "Window could not be created! SDL_Error: "
+                          << SDL_GetError() << "\n";
+            else
+                m_isActive = true;
+        }
     }
 
-    bool isActive() { return m_isActive; }
+    bool isActive() const { return m_isActive; }
     void destroy()
     {
         SDL_Quit();
@@ -54,6 +60,7 @@ class MainGameWindow : public TestFixture
 {
 public:
     MainWindow wnd;
+    SDL_Window *test_window;
 };
 
 TEST_F(MainGameWindow, IsDeactiveByDefaultAfterCreate)
@@ -69,18 +76,12 @@ TEST_F(MainGameWindow, InitializeSDLLibrary)
     wnd.init();
 }
 
-TEST_F(MainGameWindow, ThrowInializationFail)
+TEST_F(MainGameWindow, GetErrorOnInializationFail)
 {
     EXPECT_CALL(*_SDL_Mock, SDL_Init(SDL_INIT_VEDIO)).Times(1).WillOnce(Return(-1));
+    EXPECT_CALL(*_SDL_Mock, SDL_GetError()).Times(1).WillOnce(Return("SDL Init Failed."));
 
-    ASSERT_THROW(wnd.init(), SDLInitFailedExpection);
-}
-
-TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
-{
     wnd.init();
-
-    ASSERT_THAT(wnd.isActive(), true);
 }
 
 TEST_F(MainGameWindow, QuitSDLWhenDestroy)
@@ -104,7 +105,7 @@ TEST_F(MainGameWindow, CreateSDLWindow)
     wnd.init();
 }
 
-TEST_F(MainGameWindow, ThrowOnCreateWindowFailure)
+TEST_F(MainGameWindow, GetErrorOnCreateWindowFailure)
 {
     EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
                                              SDL_WINDOWPOS_UNDEFINED,
@@ -114,6 +115,22 @@ TEST_F(MainGameWindow, ThrowOnCreateWindowFailure)
                                              SDL_WINDOW_SHOWN))
         .Times(1)
         .WillOnce(Return(static_cast<SDL_Window *>(NULL)));
+    EXPECT_CALL(*_SDL_Mock, SDL_GetError()).Times(1).WillOnce(Return("SDL Create Window Failed."));
 
-    ASSERT_THROW(wnd.init(), SDLCreateWindowFailedExpection);
+    wnd.init();
+}
+
+TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
+                                             SDL_WINDOWPOS_UNDEFINED,
+                                             SDL_WINDOWPOS_UNDEFINED,
+                                             SCREEN_WIDTH,
+                                             SCREEN_HEIGHT,
+                                             SDL_WINDOW_SHOWN))
+        .Times(1)
+        .WillOnce(Return(test_window));
+    wnd.init();
+
+    ASSERT_THAT(wnd.isActive(), true);
 }

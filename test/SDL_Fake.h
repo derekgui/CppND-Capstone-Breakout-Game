@@ -16,6 +16,7 @@ public:
     //Mock Methods
     MOCK_METHOD1(SDL_Init, int(Uint32));
     MOCK_METHOD0(SDL_Quit, void(void));
+    MOCK_METHOD0(SDL_GetError, const char *(void));
     MOCK_METHOD6(SDL_CreateWindow, SDL_Window *(const char *, int, int, int, int, Uint32));
 };
 
@@ -36,6 +37,7 @@ std::unique_ptr<SDL_Mock> TestFixture::_SDL_Mock;
 //Fack SDL functions
 int SDL_Init(Uint32 Flag) { return TestFixture::_SDL_Mock->SDL_Init(Flag); }
 void SDL_Quit() { return TestFixture::_SDL_Mock->SDL_Quit(); }
+const char *SDL_GetError() { return TestFixture::_SDL_Mock->SDL_GetError(); }
 SDL_Window *SDL_CreateWindow(const char *title,
                              int x,
                              int y,
