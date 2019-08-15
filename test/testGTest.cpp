@@ -20,9 +20,10 @@ public:
         m_isActive = true;
     }
 
-    bool isActive()
+    bool isActive() { return m_isActive; }
+    void destroy()
     {
-        return m_isActive;
+        SDL_Quit();
     }
 
 private:
@@ -60,4 +61,11 @@ TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
     wnd.init();
 
     ASSERT_THAT(wnd.isActive(), true);
+}
+
+TEST_F(MainGameWindow, QuitSDLWhenDestroy)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_Quit()).Times(1);
+
+    wnd.destroy();
 }
