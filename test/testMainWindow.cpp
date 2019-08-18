@@ -36,8 +36,6 @@ TEST_F(MainGameWindow, GetErrorOnInializationFail)
 TEST_F(MainGameWindow, QuitSDLWhenDestroy)
 {
     EXPECT_CALL(*_SDL_Mock, SDL_Quit()).Times(1);
-
-    wnd.destroy();
 }
 
 TEST_F(MainGameWindow, CreateSDLWindow)
