@@ -10,6 +10,17 @@ public:
 
     MainWindow wnd{SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT};
     std::unique_ptr<SDL_Window> test_window = std::make_unique<SDL_Window>();
+    void arrangeWindowCreation(SDL_Window *returnWindowAddress)
+    {
+        EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
+                                                 SDL_WINDOWPOS_UNDEFINED,
+                                                 SDL_WINDOWPOS_UNDEFINED,
+                                                 SCREEN_WIDTH,
+                                                 SCREEN_HEIGHT,
+                                                 SDL_WINDOW_SHOWN))
+            .Times(1)
+            .WillOnce(Return(returnWindowAddress));
+    }
 };
 
 TEST_F(MainGameWindow, IsDeactiveByDefaultAfterCreate)
@@ -40,43 +51,23 @@ TEST_F(MainGameWindow, QuitSDLWhenDestroy)
 
 TEST_F(MainGameWindow, CreateSDLWindow)
 {
-
-    EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SCREEN_WIDTH,
-                                             SCREEN_HEIGHT,
-                                             SDL_WINDOW_SHOWN))
-        .Times(1);
+    arrangeWindowCreation(static_cast<SDL_Window *>(NULL));
 
     wnd.init();
 }
 
 TEST_F(MainGameWindow, GetErrorOnCreateWindowFailure)
 {
-    EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SCREEN_WIDTH,
-                                             SCREEN_HEIGHT,
-                                             SDL_WINDOW_SHOWN))
-        .Times(1)
-        .WillOnce(Return(static_cast<SDL_Window *>(NULL)));
     EXPECT_CALL(*_SDL_Mock, SDL_GetError()).Times(1).WillOnce(Return("SDL Create Window Failed."));
+
+    arrangeWindowCreation(static_cast<SDL_Window *>(NULL));
 
     wnd.init();
 }
 
 TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
 {
-    EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SCREEN_WIDTH,
-                                             SCREEN_HEIGHT,
-                                             SDL_WINDOW_SHOWN))
-        .Times(1)
-        .WillOnce(Return(test_window.get()));
+    arrangeWindowCreation(test_window.get());
 
     wnd.init();
 
@@ -85,14 +76,7 @@ TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
 
 TEST_F(MainGameWindow, ReturnWindowRawAddressWhenGet)
 {
-    EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SDL_WINDOWPOS_UNDEFINED,
-                                             SCREEN_WIDTH,
-                                             SCREEN_HEIGHT,
-                                             SDL_WINDOW_SHOWN))
-        .Times(1)
-        .WillOnce(Return(test_window.get()));
+    arrangeWindowCreation(test_window.get());
 
     wnd.init();
 
@@ -102,4 +86,14 @@ TEST_F(MainGameWindow, ReturnWindowRawAddressWhenGet)
 TEST_F(MainGameWindow, DestroySDLWindowWhenDestroy)
 {
     EXPECT_CALL(*_SDL_Mock, SDL_DestroyWindow(_)).Times(1);
+}
+
+TEST_F(MainGameWindow, DeactiveWindowWhenDestroy)
+{
+
+    arrangeWindowCreation(test_window.get());
+    wnd.init();
+    wnd.destroy();
+
+    ASSERT_THAT(wnd.isActive(), Eq(false));
 }

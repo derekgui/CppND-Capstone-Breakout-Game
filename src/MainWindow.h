@@ -66,6 +66,7 @@ void MainWindow::destroy()
 {
     SDL_DestroyWindow(m_window);
     SDL_Quit();
+    m_isActive = false;
 }
 
 SDL_Window *MainWindow::get() const noexcept
