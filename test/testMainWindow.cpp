@@ -9,6 +9,7 @@ public:
     static constexpr int SCREEN_HEIGHT = 480;
 
     MainWindow wnd{SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT};
+    std::unique_ptr<SDL_Window> test_window = std::make_unique<SDL_Window>();
 };
 
 TEST_F(MainGameWindow, IsDeactiveByDefaultAfterCreate)
@@ -68,8 +69,6 @@ TEST_F(MainGameWindow, GetErrorOnCreateWindowFailure)
 
 TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
 {
-    SDL_Window *test_window = new SDL_Window;
-
     EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
                                              SDL_WINDOWPOS_UNDEFINED,
                                              SDL_WINDOWPOS_UNDEFINED,
@@ -77,12 +76,27 @@ TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
                                              SCREEN_HEIGHT,
                                              SDL_WINDOW_SHOWN))
         .Times(1)
-        .WillOnce(Return(test_window));
+        .WillOnce(Return(test_window.get()));
 
     wnd.init();
 
     ASSERT_THAT(wnd.isActive(), true);
-    delete test_window;
+}
+
+TEST_F(MainGameWindow, ReturnWindowRawAddressWhenGet)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
+                                             SDL_WINDOWPOS_UNDEFINED,
+                                             SDL_WINDOWPOS_UNDEFINED,
+                                             SCREEN_WIDTH,
+                                             SCREEN_HEIGHT,
+                                             SDL_WINDOW_SHOWN))
+        .Times(1)
+        .WillOnce(Return(test_window.get()));
+
+    wnd.init();
+
+    ASSERT_THAT(wnd.get(), Eq(test_window.get()));
 }
 
 TEST_F(MainGameWindow, DestroySDLWindowWhenDestroy)

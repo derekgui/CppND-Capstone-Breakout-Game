@@ -14,6 +14,7 @@ public:
     void init();
     bool isActive() const;
     void destroy();
+    SDL_Window *get() const noexcept;
 
 private:
     bool m_isActive{false};
@@ -30,7 +31,7 @@ MainWindow::MainWindow(int screenPosX, int screenPosY, int screenWidth, int scre
       m_screenWidth(screenWidth),
       m_screenHeight(screenHeight)
 {
-    //   init();
+    init();
 }
 
 MainWindow::~MainWindow()
@@ -65,6 +66,11 @@ void MainWindow::destroy()
 {
     SDL_DestroyWindow(m_window);
     SDL_Quit();
+}
+
+SDL_Window *MainWindow::get() const noexcept
+{
+    return m_window;
 }
 
 #endif
