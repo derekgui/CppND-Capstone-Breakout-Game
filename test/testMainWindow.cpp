@@ -1,4 +1,4 @@
-#include "../test/SDL_Fake.h"
+
 #include "../src/MainWindow.h"
 #include "gtest/gtest.h"
 
@@ -9,7 +9,6 @@ public:
     static constexpr int SCREEN_HEIGHT = 480;
 
     MainWindow wnd{SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT};
-    SDL_Window *test_window;
 };
 
 TEST_F(MainGameWindow, IsDeactiveByDefaultAfterCreate)
@@ -69,6 +68,8 @@ TEST_F(MainGameWindow, GetErrorOnCreateWindowFailure)
 
 TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
 {
+    SDL_Window *test_window = new SDL_Window;
+
     EXPECT_CALL(*_SDL_Mock, SDL_CreateWindow("Breakout Game",
                                              SDL_WINDOWPOS_UNDEFINED,
                                              SDL_WINDOWPOS_UNDEFINED,
@@ -77,13 +78,14 @@ TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
                                              SDL_WINDOW_SHOWN))
         .Times(1)
         .WillOnce(Return(test_window));
+
     wnd.init();
 
     ASSERT_THAT(wnd.isActive(), true);
+    delete test_window;
 }
 
 TEST_F(MainGameWindow, DestroySDLWindowWhenDestroy)
 {
     EXPECT_CALL(*_SDL_Mock, SDL_DestroyWindow(_)).Times(1);
-    wnd.destroy();
 }

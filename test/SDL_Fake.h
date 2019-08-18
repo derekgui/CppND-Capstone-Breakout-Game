@@ -10,7 +10,7 @@ using ::testing::_;
 using ::testing::Eq;
 using ::testing::Return;
 
-typedef struct SDL_Window SDL_Window;
+typedef int SDL_Window;
 typedef uint32_t Uint32;
 
 static constexpr int SDL_INIT_VIDEO = 0;

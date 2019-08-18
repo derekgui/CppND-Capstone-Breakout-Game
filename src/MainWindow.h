@@ -16,8 +16,8 @@ public:
     void destroy();
 
 private:
-    bool m_isActive;
-    SDL_Window *m_window;
+    bool m_isActive{false};
+    SDL_Window *m_window{NULL};
     int m_screenPosX;
     int m_screenPosY;
     int m_screenWidth;
@@ -28,11 +28,9 @@ MainWindow::MainWindow(int screenPosX, int screenPosY, int screenWidth, int scre
     : m_screenPosX(screenPosX),
       m_screenPosY(screenPosY),
       m_screenWidth(screenWidth),
-      m_screenHeight(screenHeight),
-      m_window(nullptr),
-      m_isActive(false)
+      m_screenHeight(screenHeight)
 {
-    init();
+    //   init();
 }
 
 MainWindow::~MainWindow()
