@@ -1,12 +1,21 @@
 #ifndef SDL_FAKE_H
 #define SDL_FAKE_H
-#include <memory>
+
 #include "gmock/gmock.h"
+#include <memory>
 
 using namespace ::testing;
 
+using ::testing::_;
+using ::testing::Eq;
+using ::testing::Return;
+
 typedef struct SDL_Window SDL_Window;
 typedef uint32_t Uint32;
+
+static constexpr int SDL_INIT_VIDEO = 0;
+static constexpr int SDL_WINDOW_SHOWN = 1;
+static constexpr int SDL_WINDOWPOS_UNDEFINED = 0;
 
 class SDL_Mock
 {
