@@ -4,36 +4,42 @@ class Controller
 {
 public:
     bool isAvailable() const { return m_isAvailable; }
-    void handleEvent(bool enableCtrl)
+    void handleEvent()
     {
-        if (enableCtrl)
+        while (SDL_PollEvent(&e) != 0)
         {
-            m_isAvailable = true;
+            if (e.type == SDL_QUIT)
+                m_isAvailable = false;
         }
     }
 
 private:
-    bool m_isAvailable{false};
+    bool m_isAvailable{true};
+    SDL_Event e;
 };
 
-class GameController : public testing::Test
+class GameController : public TestFixture
 {
 public:
     Controller controller;
     SDL_Event e;
 };
 
-TEST_F(GameController, IsNotAvailableByDefault)
+TEST_F(GameController, IsAvailableAfterCreation)
 {
-
-    ASSERT_THAT(controller.isAvailable(), Eq(false));
-}
-
-TEST_F(GameController, IsAvailableAfterEnable)
-{
-    bool enableCtrl = true;
-
-    controller.handleEvent(enableCtrl);
 
     ASSERT_THAT(controller.isAvailable(), Eq(true));
+}
+
+TEST_F(GameController, IsNotAvailableWhenQuitEvent)
+{
+    e.type = SDL_QUIT;
+
+    EXPECT_CALL(*_SDL_Mock, SDL_PollEvent(_))
+        .WillOnce(DoAll(SetArgPointee<0>(e), Return(1)))
+        .WillOnce(Return(0));
+
+    controller.handleEvent();
+
+    ASSERT_THAT(controller.isAvailable(), Eq(false));
 }

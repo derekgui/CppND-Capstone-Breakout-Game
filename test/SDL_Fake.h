@@ -10,8 +10,31 @@ using ::testing::_;
 using ::testing::Eq;
 using ::testing::Return;
 
+enum EvenType
+{
+    SDL_QUIT,
+    SDL_KEYDOWN
+};
+
 typedef int SDL_Window;
-typedef int SDL_Event;
+
+typedef struct
+{
+    EvenType type;
+
+    struct KEY
+    {
+        struct KEYSYM
+        {
+            enum SYM
+            {
+                SDLK_LEFT,
+                SDLK_RIGHT
+            } sym;
+        } keysym;
+    } key;
+
+} SDL_Event;
 typedef uint32_t Uint32;
 
 static constexpr int SDL_INIT_VIDEO = 0;
@@ -23,12 +46,15 @@ class SDL_Mock
 public:
     virtual ~SDL_Mock() {}
 
-    //Mock Methods
+    //Window Mock Methods
     MOCK_METHOD1(SDL_Init, int(Uint32));
     MOCK_METHOD0(SDL_Quit, void(void));
     MOCK_METHOD0(SDL_GetError, const char *(void));
     MOCK_METHOD6(SDL_CreateWindow, SDL_Window *(const char *, int, int, int, int, Uint32));
     MOCK_METHOD1(SDL_DestroyWindow, void(SDL_Window *));
+
+    //Event Mock Methods
+    MOCK_METHOD1(SDL_PollEvent, int(SDL_Event *));
 };
 
 class TestFixture : public ::testing::Test
@@ -62,6 +88,11 @@ SDL_Window *SDL_CreateWindow(const char *title,
 void SDL_DestroyWindow(SDL_Window *window)
 {
     return TestFixture::_SDL_Mock->SDL_DestroyWindow(window);
+}
+
+int SDL_PollEvent(SDL_Event *event)
+{
+    return TestFixture::_SDL_Mock->SDL_PollEvent(event);
 }
 
 #endif
