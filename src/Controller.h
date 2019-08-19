@@ -22,9 +22,6 @@ public:
     Controller()
         : m_isAvailable(true),
           m_keyStatus(STAT_DEFAULT) {}
-    Controller(const Controller &controller) = delete;
-    Controller &operator=(const Controller &controller) = delete;
-    ~Controller() = delete;
     bool isAvailable() const { return m_isAvailable; }
     KEYSTATUS keyStatus() const { return m_keyStatus; }
     void handleEvent()
