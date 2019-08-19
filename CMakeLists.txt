@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.7)
 
+if(NOT TESTING)
+    set(TESTING "notest")
+endif()
+
+message("TESTING = ${TESTING}")
+
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -23,6 +29,10 @@ find_package(SDL2 REQUIRED)
 #
 #Add sub-build tree
 #
-add_subdirectory(src)
-add_subdirectory(test)
-add_subdirectory(googletest)
+if(${TESTING} STREQUAL "notest")
+    add_subdirectory(src)
+else()
+    add_subdirectory(src)
+    add_subdirectory(test)
+    add_subdirectory(googletest)
+endif()

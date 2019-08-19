@@ -1,8 +1,14 @@
 #ifndef EXAMPLE_H
 #define EXAMPLE_H
 
-#include <iostream>
+#define SDL_FAKE_ON
+#ifdef SDL_FAKE_ON
 #include "../test/SDL_Fake.h"
+#else
+#include "SDL2/SDL.h"
+#endif
+
+#include <iostream>
 
 class MainWindow
 {
