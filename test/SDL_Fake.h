@@ -16,6 +16,12 @@ enum EvenType
     SDL_KEYDOWN
 };
 
+enum SYM
+{
+    SDLK_LEFT,
+    SDLK_RIGHT
+};
+
 typedef int SDL_Window;
 
 typedef struct
@@ -26,11 +32,8 @@ typedef struct
     {
         struct KEYSYM
         {
-            enum SYM
-            {
-                SDLK_LEFT,
-                SDLK_RIGHT
-            } sym;
+            SYM sym;
+
         } keysym;
     } key;
 
