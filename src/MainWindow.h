@@ -9,6 +9,7 @@
 #endif
 
 #include <iostream>
+#include <string>
 
 class MainWindow
 {
@@ -23,6 +24,7 @@ public:
     bool isActive() const;
     void destroy();
     SDL_Window *get() const noexcept;
+    void UpdateWindowTitle(int score, int fps);
 
 private:
     static constexpr int SCREEN_WIDTH = 640;
@@ -84,6 +86,12 @@ void MainWindow::destroy()
 SDL_Window *MainWindow::get() const noexcept
 {
     return m_window;
+}
+
+void MainWindow::UpdateWindowTitle(int score, int fps)
+{
+    std::string title{"Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+    SDL_SetWindowTitle(m_window, title.c_str());
 }
 
 #endif

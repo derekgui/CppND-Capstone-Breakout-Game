@@ -84,6 +84,7 @@ public:
     MOCK_METHOD1(SDL_RenderClear, int(SDL_Renderer *));
     MOCK_METHOD1(SDL_RenderPresent, void(SDL_Renderer *));
     MOCK_METHOD2(SDL_RenderFillRect, int(SDL_Renderer *, const SDL_Rect *));
+    MOCK_METHOD2(SDL_SetWindowTitle, void(SDL_Window *, const char *));
 };
 
 class TestFixture : public ::testing::Test
@@ -157,6 +158,12 @@ int SDL_RenderFillRect(SDL_Renderer *renderer,
                        const SDL_Rect *rect)
 {
     return TestFixture::_SDL_Mock->SDL_RenderFillRect(renderer, rect);
+}
+
+void SDL_SetWindowTitle(SDL_Window *window,
+                        const char *title)
+{
+    return TestFixture::_SDL_Mock->SDL_SetWindowTitle(window, title);
 }
 
 #endif

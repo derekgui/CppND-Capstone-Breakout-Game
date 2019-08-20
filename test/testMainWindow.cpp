@@ -97,3 +97,13 @@ TEST_F(MainGameWindow, DeactiveWindowWhenDestroy)
 
     ASSERT_THAT(wnd.isActive(), Eq(false));
 }
+
+TEST_F(MainGameWindow, UpdateWindowTitle)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_SetWindowTitle(_, _)).Times(1);
+
+    int score = 5;
+    int fps = 60;
+
+    wnd.UpdateWindowTitle(score, fps);
+}
