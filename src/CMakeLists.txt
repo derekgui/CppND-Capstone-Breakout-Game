@@ -15,10 +15,3 @@ else()
                             PRIVATE sdl_fake
                             PUBLIC pthread)
 endif()
-
-
-add_library(MainWindow OBJECT MainWindow.h MainWindow.cpp)
-target_link_libraries(MainWindow)
-
-add_library(Game OBJECT Game.cpp)
-target_link_libraries(Game)

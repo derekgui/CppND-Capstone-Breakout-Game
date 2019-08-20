@@ -1,12 +1,11 @@
 
-#include "../src/MainWindow.h"
-#include "gtest/gtest.h"
+#include "../src/MainWindow.cpp"
 
 class MainGameWindow : public TestFixture
 {
 public:
     static constexpr int SCREEN_WIDTH = 640;
-    static constexpr int SCREEN_HEIGHT = 480;
+    static constexpr int SCREEN_HEIGHT = 640;
 
     MainWindow wnd{SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT};
     std::unique_ptr<SDL_Window> test_window = std::make_unique<SDL_Window>();
