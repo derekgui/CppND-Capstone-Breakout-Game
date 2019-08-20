@@ -34,6 +34,14 @@ typedef struct
 
 typedef struct
 {
+    int x;
+    int y;
+    int w;
+    int h;
+} SDL_Rect;
+
+typedef struct
+{
     EvenType type;
 
     struct KEY
@@ -47,6 +55,7 @@ typedef struct
 
 } SDL_Event;
 typedef uint32_t Uint32;
+typedef uint8_t Uint8;
 
 static constexpr int SDL_INIT_VIDEO = 0;
 static constexpr int SDL_WINDOW_SHOWN = 1;
@@ -71,6 +80,10 @@ public:
     //Renderer Mock
     MOCK_METHOD3(SDL_CreateRenderer, SDL_Renderer *(SDL_Window *, int, Uint32));
     MOCK_METHOD1(SDL_DestroyRenderer, void(SDL_Renderer *));
+    MOCK_METHOD5(SDL_SetRenderDrawColor, int(SDL_Renderer *, Uint8, Uint8, Uint8, Uint8));
+    MOCK_METHOD1(SDL_RenderClear, int(SDL_Renderer *));
+    MOCK_METHOD1(SDL_RenderPresent, void(SDL_Renderer *));
+    MOCK_METHOD2(SDL_RenderFillRect, int(SDL_Renderer *, const SDL_Rect *));
 };
 
 class TestFixture : public ::testing::Test
@@ -119,6 +132,31 @@ SDL_Renderer *SDL_CreateRenderer(SDL_Window *window, int index, Uint32 flags)
 void SDL_DestroyRenderer(SDL_Renderer *renderer)
 {
     return TestFixture::_SDL_Mock->SDL_DestroyRenderer(renderer);
+}
+
+int SDL_SetRenderDrawColor(SDL_Renderer *renderer,
+                           Uint8 r,
+                           Uint8 g,
+                           Uint8 b,
+                           Uint8 a)
+{
+    return TestFixture::_SDL_Mock->SDL_SetRenderDrawColor(renderer, r, g, b, a);
+}
+
+int SDL_RenderClear(SDL_Renderer *renderer)
+{
+    return TestFixture::_SDL_Mock->SDL_RenderClear(renderer);
+}
+
+void SDL_RenderPresent(SDL_Renderer *renderer)
+{
+    return TestFixture::_SDL_Mock->SDL_RenderPresent(renderer);
+}
+
+int SDL_RenderFillRect(SDL_Renderer *renderer,
+                       const SDL_Rect *rect)
+{
+    return TestFixture::_SDL_Mock->SDL_RenderFillRect(renderer, rect);
 }
 
 #endif

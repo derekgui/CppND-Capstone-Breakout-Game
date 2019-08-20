@@ -34,6 +34,27 @@ public:
         return m_isActive;
     }
 
+    void clearScreen()
+    {
+        SDL_SetRenderDrawColor(m_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+        SDL_RenderClear(m_renderer);
+    }
+
+    void updateScreen()
+    {
+        SDL_RenderPresent(m_renderer);
+    }
+
+    void drawRect(const SDL_Rect *rect,
+                  Uint8 r,
+                  Uint8 g,
+                  Uint8 b,
+                  Uint8 a)
+    {
+        SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
+        SDL_RenderFillRect(m_renderer, rect);
+    }
+
 private:
     bool m_isActive;
     SDL_Renderer *m_renderer;
@@ -111,4 +132,29 @@ TEST_F(GameRenderer, DestroyWindowAndQuitInSequence)
     EXPECT_CALL(*_SDL_Mock, SDL_DestroyRenderer(_)).Times(1);
     EXPECT_CALL(*_SDL_Mock, SDL_DestroyWindow(_)).Times(1);
     EXPECT_CALL(*_SDL_Mock, SDL_Quit()).Times(1);
+}
+
+TEST_F(GameRenderer, ClearScreen)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_SetRenderDrawColor(_, _, _, _, _)).Times(1);
+    EXPECT_CALL(*_SDL_Mock, SDL_RenderClear(_)).Times(1);
+
+    renderer.clearScreen();
+}
+
+TEST_F(GameRenderer, UpdateScreen)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_RenderPresent(_)).Times(1);
+
+    renderer.updateScreen();
+}
+
+TEST_F(GameRenderer, DrawRect)
+{
+    EXPECT_CALL(*_SDL_Mock, SDL_SetRenderDrawColor(_, _, _, _, _)).Times(1);
+    EXPECT_CALL(*_SDL_Mock, SDL_RenderFillRect(_, _)).Times(1);
+
+    SDL_Rect block;
+
+    renderer.drawRect(&block, 0xff, 0xff, 0xff, 0xff);
 }
