@@ -64,10 +64,13 @@ public:
     MOCK_METHOD0(SDL_GetError, const char *(void));
     MOCK_METHOD6(SDL_CreateWindow, SDL_Window *(const char *, int, int, int, int, Uint32));
     MOCK_METHOD1(SDL_DestroyWindow, void(SDL_Window *));
-    MOCK_METHOD3(SDL_CreateRenderer, SDL_Renderer *(SDL_Window *, int, Uint32));
 
     //Event Mock Methods
     MOCK_METHOD1(SDL_PollEvent, int(SDL_Event *));
+
+    //Renderer Mock
+    MOCK_METHOD3(SDL_CreateRenderer, SDL_Renderer *(SDL_Window *, int, Uint32));
+    MOCK_METHOD1(SDL_DestroyRenderer, void(SDL_Renderer *));
 };
 
 class TestFixture : public ::testing::Test
@@ -112,4 +115,10 @@ SDL_Renderer *SDL_CreateRenderer(SDL_Window *window, int index, Uint32 flags)
 {
     return TestFixture::_SDL_Mock->SDL_CreateRenderer(window, index, flags);
 }
+
+void SDL_DestroyRenderer(SDL_Renderer *renderer)
+{
+    return TestFixture::_SDL_Mock->SDL_DestroyRenderer(renderer);
+}
+
 #endif
