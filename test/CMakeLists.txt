@@ -4,14 +4,16 @@ target_link_libraries(sdl_fake
 
 
 if(${TESTING} STREQUAL "MainWindow")
-    add_executable(test testMainWindow.cpp)
-    target_link_libraries(test gmock_main) 
+    add_executable(test testMainWindow.cpp) 
 elseif(${TESTING} STREQUAL "Controller")
     add_executable(test testController.cpp)
-    target_link_libraries(test gmock_main) 
+elseif(${TESTING} STREQUAL "Renderer")
+    add_executable(test testRenderer.cpp)
 else()
 
 endif()
+
+target_link_libraries(test gmock_main)
 
 add_test(NAME test COMMAND test)
 
