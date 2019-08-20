@@ -13,8 +13,10 @@
 class MainWindow
 {
 public:
-    MainWindow(int screenPosX, int screenPosY, int screenWidth, int screenHeight);
-    MainWindow(const MainWindow &wnd) = delete;
+    MainWindow(int screenPosX = SDL_WINDOWPOS_UNDEFINED,
+               int screenPosY = SDL_WINDOWPOS_UNDEFINED,
+               int screenWidth = SCREEN_WIDTH,
+               int screenHeight = SCREEN_HEIGHT);
     MainWindow &operator=(const MainWindow &wnd) = delete;
     ~MainWindow();
     void init();
@@ -23,6 +25,9 @@ public:
     SDL_Window *get() const noexcept;
 
 private:
+    static constexpr int SCREEN_WIDTH = 640;
+    static constexpr int SCREEN_HEIGHT = 480;
+
     bool m_isActive{false};
     SDL_Window *m_window{NULL};
     int m_screenPosX;
@@ -71,6 +76,7 @@ bool MainWindow::isActive() const { return m_isActive; }
 void MainWindow::destroy()
 {
     SDL_DestroyWindow(m_window);
+    m_window = NULL;
     SDL_Quit();
     m_isActive = false;
 }

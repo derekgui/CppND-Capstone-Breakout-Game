@@ -22,7 +22,15 @@ enum SYM
     SDLK_RIGHT
 };
 
-typedef int SDL_Window;
+typedef struct
+{
+
+} SDL_Window;
+
+typedef struct
+{
+
+} SDL_Renderer;
 
 typedef struct
 {
@@ -43,6 +51,7 @@ typedef uint32_t Uint32;
 static constexpr int SDL_INIT_VIDEO = 0;
 static constexpr int SDL_WINDOW_SHOWN = 1;
 static constexpr int SDL_WINDOWPOS_UNDEFINED = 0;
+static constexpr Uint32 SDL_RENDERER_ACCELERATED = 1;
 
 class SDL_Mock
 {
@@ -55,6 +64,7 @@ public:
     MOCK_METHOD0(SDL_GetError, const char *(void));
     MOCK_METHOD6(SDL_CreateWindow, SDL_Window *(const char *, int, int, int, int, Uint32));
     MOCK_METHOD1(SDL_DestroyWindow, void(SDL_Window *));
+    MOCK_METHOD3(SDL_CreateRenderer, SDL_Renderer *(SDL_Window *, int, Uint32));
 
     //Event Mock Methods
     MOCK_METHOD1(SDL_PollEvent, int(SDL_Event *));
@@ -98,4 +108,8 @@ int SDL_PollEvent(SDL_Event *event)
     return TestFixture::_SDL_Mock->SDL_PollEvent(event);
 }
 
+SDL_Renderer *SDL_CreateRenderer(SDL_Window *window, int index, Uint32 flags)
+{
+    return TestFixture::_SDL_Mock->SDL_CreateRenderer(window, index, flags);
+}
 #endif
