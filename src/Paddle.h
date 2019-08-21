@@ -13,15 +13,14 @@
 class Paddle
 {
 public:
-    void init(int posX, int posY);
-    bool isActive() const;
+    Paddle(int posX, int posY);
     SDL_Rect getPaddleBlock() const;
     void drawSelf(Renderer &rnd) const;
 
 private:
-    bool m_isActive{false};
     static constexpr int width = 32 * 6;
     static constexpr int height = 32 * 6;
+    SDL_Rect m_paddleBlock;
 };
 
 #endif
