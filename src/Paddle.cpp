@@ -9,3 +9,7 @@ SDL_Rect Paddle::getPaddleBlock() const
 {
     return m_paddleBlock;
 }
+
+void Paddle::drawSelf(Renderer &rnd) const
+{
+}
