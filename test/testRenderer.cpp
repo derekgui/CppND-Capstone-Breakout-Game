@@ -92,12 +92,13 @@ TEST_F(GameRenderer, UpdateScreen)
 
 TEST_F(GameRenderer, DrawRect)
 {
-    EXPECT_CALL(*_SDL_Mock, SDL_SetRenderDrawColor(_, _, _, _, _)).Times(1);
+    EXPECT_CALL(*_SDL_Mock, SDL_SetRenderDrawColor(_, 0xD3, 0xD3, 0xD3, 0xFF)).Times(1);
     EXPECT_CALL(*_SDL_Mock, SDL_RenderFillRect(_, _)).Times(1);
 
     SDL_Rect block;
+    Color c = Colors::LightGray;
 
-    renderer.drawRect(&block, 0xff, 0xff, 0xff, 0xff);
+    renderer.drawRect(&block, c);
 }
 
 TEST_F(GameRenderer, ReturnRendererRawPointWhenGet)

@@ -43,13 +43,9 @@ void Renderer::updateScreen()
     SDL_RenderPresent(m_renderer);
 }
 
-void Renderer::drawRect(const SDL_Rect *rect,
-                        Uint8 r,
-                        Uint8 g,
-                        Uint8 b,
-                        Uint8 a)
+void Renderer::drawRect(const SDL_Rect *rect, Color c)
 {
-    SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
+    SDL_SetRenderDrawColor(m_renderer, c.GetR(), c.GetG(), c.GetB(), c.GetA());
     SDL_RenderFillRect(m_renderer, rect);
 }
 

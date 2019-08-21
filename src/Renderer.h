@@ -9,6 +9,7 @@
 #endif
 
 #include "MainWindow.h"
+#include "Colors.h"
 
 class Renderer
 {
@@ -23,11 +24,7 @@ public:
 
     void updateScreen();
 
-    void drawRect(const SDL_Rect *rect,
-                  Uint8 r,
-                  Uint8 g,
-                  Uint8 b,
-                  Uint8 a);
+    void drawRect(const SDL_Rect *rect, Color c);
 
     SDL_Renderer *get() const noexcept;
 
