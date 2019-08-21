@@ -1,4 +1,4 @@
-#include "../src/Controller.cpp"
+#include "../src/Controller.h"
 
 class GameController : public TestFixture
 {
@@ -37,7 +37,7 @@ TEST_F(GameController, FireLeftKeyFlagwhenPressed)
 
     controller.handleEvent();
 
-    ASSERT_THAT(controller.keyStatus(), Eq(KEYSTATUS::LEFT_DOWN));
+    ASSERT_THAT(controller.keyStatus(), Eq(controller.LEFT_DOWN));
 }
 
 TEST_F(GameController, FireRightKeyFlagwhenPressed)
@@ -51,5 +51,5 @@ TEST_F(GameController, FireRightKeyFlagwhenPressed)
 
     controller.handleEvent();
 
-    ASSERT_THAT(controller.keyStatus(), Eq(KEYSTATUS::RIGHT_DOWN));
+    ASSERT_THAT(controller.keyStatus(), Eq(controller.RIGHT_DOWN));
 }

@@ -8,22 +8,41 @@
 #include "SDL2/SDL.h"
 #endif
 
-enum class KEYSTATUS
-{
-    LEFT_DOWN,
-    RIGHT_DOWN,
-    STAT_DEFAULT
-};
-
 class Controller
 {
 public:
-    Controller();
-    bool isAvailable() const;
+    enum KEYSTATUS
+    {
+        LEFT_DOWN,
+        RIGHT_DOWN,
+        STAT_DEFAULT
+    };
+
+public:
+    Controller()
+        : m_isAvailable(true),
+          m_keyStatus(STAT_DEFAULT) {}
+    bool isAvailable() const { return m_isAvailable; }
     Controller(const Controller &controller) = delete;
     Controller &operator=(const Controller &controller) = delete;
-    KEYSTATUS keyStatus() const;
-    void handleEvent();
+    KEYSTATUS keyStatus() const { return m_keyStatus; }
+    void handleEvent()
+    {
+        while (SDL_PollEvent(&e) != 0)
+        {
+            if (e.type == SDL_QUIT)
+                m_isAvailable = false;
+            else if (e.type == SDL_KEYDOWN)
+            {
+                if (e.key.keysym.sym == SDLK_LEFT)
+                    m_keyStatus = LEFT_DOWN;
+                else if (e.key.keysym.sym == SDLK_RIGHT)
+                    m_keyStatus = RIGHT_DOWN;
+                else
+                    m_keyStatus = STAT_DEFAULT;
+            }
+        }
+    }
 
 private:
     bool m_isAvailable;
