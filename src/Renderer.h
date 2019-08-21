@@ -8,7 +8,7 @@
 #include "SDL2/SDL.h"
 #endif
 
-#include "../src/MainWindow.h"
+#include "MainWindow.h"
 
 class Renderer
 {

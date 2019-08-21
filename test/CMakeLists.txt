@@ -9,6 +9,8 @@ elseif(${TESTING} STREQUAL "Controller")
     add_executable(test testController.cpp)
 elseif(${TESTING} STREQUAL "Renderer")
     add_executable(test testRenderer.cpp)
+elseif(${TESTING} STREQUAL "Paddle")
+    add_executable(test testPaddle.cpp)
 endif()
 
 target_link_libraries(test sdl_fake)
