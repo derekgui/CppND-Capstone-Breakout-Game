@@ -1,5 +1,5 @@
-#ifndef EXAMPLE_H
-#define EXAMPLE_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #define SDL_FAKE_ON
 #ifdef SDL_FAKE_ON

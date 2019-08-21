@@ -1,4 +1,5 @@
-#include "../src/Renderer.h"
+#include "../src/MainWindow.cpp"
+#include "../src/Renderer.cpp"
 
 class GameRenderer : public TestFixture
 {

@@ -1,4 +1,4 @@
-add_library(sdl_fake OBJECT SDL_Fake.h)
+add_library(sdl_fake OBJECT SDL_Fake.cpp)
 target_link_libraries(sdl_fake
                       gmock_main)
 
@@ -9,11 +9,9 @@ elseif(${TESTING} STREQUAL "Controller")
     add_executable(test testController.cpp)
 elseif(${TESTING} STREQUAL "Renderer")
     add_executable(test testRenderer.cpp)
-else()
-
 endif()
 
-target_link_libraries(test gmock_main)
+target_link_libraries(test sdl_fake)
 
 add_test(NAME test COMMAND test)
 

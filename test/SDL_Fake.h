@@ -90,80 +90,45 @@ public:
 class TestFixture : public ::testing::Test
 {
 public:
-    TestFixture() { _SDL_Mock.reset(new NiceMock<SDL_Mock>()); }
-    ~TestFixture()
-    {
-        _SDL_Mock.reset();
-    }
+    TestFixture();
+    ~TestFixture();
 
     static std::unique_ptr<SDL_Mock> _SDL_Mock;
 };
 
-std::unique_ptr<SDL_Mock> TestFixture::_SDL_Mock;
-
 //Fack SDL functions
-int SDL_Init(Uint32 Flag) { return TestFixture::_SDL_Mock->SDL_Init(Flag); }
-void SDL_Quit() { return TestFixture::_SDL_Mock->SDL_Quit(); }
-const char *SDL_GetError() { return TestFixture::_SDL_Mock->SDL_GetError(); }
+int SDL_Init(Uint32 Flag);
+void SDL_Quit();
+const char *SDL_GetError();
 SDL_Window *SDL_CreateWindow(const char *title,
                              int x,
                              int y,
                              int w,
                              int h,
-                             Uint32 flags)
-{
-    return TestFixture::_SDL_Mock->SDL_CreateWindow(title, x, y, w, h, flags);
-}
+                             Uint32 flags);
 
-void SDL_DestroyWindow(SDL_Window *window)
-{
-    return TestFixture::_SDL_Mock->SDL_DestroyWindow(window);
-}
+void SDL_DestroyWindow(SDL_Window *window);
 
-int SDL_PollEvent(SDL_Event *event)
-{
-    return TestFixture::_SDL_Mock->SDL_PollEvent(event);
-}
+int SDL_PollEvent(SDL_Event *event);
 
-SDL_Renderer *SDL_CreateRenderer(SDL_Window *window, int index, Uint32 flags)
-{
-    return TestFixture::_SDL_Mock->SDL_CreateRenderer(window, index, flags);
-}
+SDL_Renderer *SDL_CreateRenderer(SDL_Window *window, int index, Uint32 flags);
 
-void SDL_DestroyRenderer(SDL_Renderer *renderer)
-{
-    return TestFixture::_SDL_Mock->SDL_DestroyRenderer(renderer);
-}
+void SDL_DestroyRenderer(SDL_Renderer *renderer);
 
 int SDL_SetRenderDrawColor(SDL_Renderer *renderer,
                            Uint8 r,
                            Uint8 g,
                            Uint8 b,
-                           Uint8 a)
-{
-    return TestFixture::_SDL_Mock->SDL_SetRenderDrawColor(renderer, r, g, b, a);
-}
+                           Uint8 a);
 
-int SDL_RenderClear(SDL_Renderer *renderer)
-{
-    return TestFixture::_SDL_Mock->SDL_RenderClear(renderer);
-}
+int SDL_RenderClear(SDL_Renderer *renderer);
 
-void SDL_RenderPresent(SDL_Renderer *renderer)
-{
-    return TestFixture::_SDL_Mock->SDL_RenderPresent(renderer);
-}
+void SDL_RenderPresent(SDL_Renderer *renderer);
 
 int SDL_RenderFillRect(SDL_Renderer *renderer,
-                       const SDL_Rect *rect)
-{
-    return TestFixture::_SDL_Mock->SDL_RenderFillRect(renderer, rect);
-}
+                       const SDL_Rect *rect);
 
 void SDL_SetWindowTitle(SDL_Window *window,
-                        const char *title)
-{
-    return TestFixture::_SDL_Mock->SDL_SetWindowTitle(window, title);
-}
+                        const char *title);
 
 #endif
