@@ -18,13 +18,29 @@ MATCHER_P(EqBlock, expected, "")
 
 TEST_F(GamePaddle, PaddleBlockInitializedAfterCreation)
 {
-    ASSERT_THAT(paddle.getPaddleBlock(), EqBlock(testBlock));
+    ASSERT_THAT(paddle.getBlock(), EqBlock(testBlock));
 }
 
 TEST_F(GamePaddle, DrawSelfOntoGraphicFrame)
 {
-    EXPECT_CALL(*_SDL_Mock, SDL_SetRenderDrawColor(_, _, _, _, _)).Times(1);
-    EXPECT_CALL(*_SDL_Mock, SDL_RenderFillRect(_, _)).Times(1);
+    Color c = Colors::Red;
+
+    EXPECT_CALL(*_SDL_Mock, SDL_SetRenderDrawColor(rnd.get(),
+                                                   c.GetR(),
+                                                   c.GetG(),
+                                                   c.GetB(),
+                                                   c.GetA()))
+        .Times(1);
+    EXPECT_CALL(*_SDL_Mock, SDL_RenderFillRect(rnd.get(), _)).Times(1);
 
     paddle.drawSelf(rnd);
+}
+
+TEST_F(GamePaddle, PaddleBlockSizeAdjustable)
+{
+    SDL_Rect block{2, 2, 32 * 3, 32 * 3};
+
+    paddle.setBlock(block);
+
+    ASSERT_THAT(paddle.getBlock(), EqBlock(block));
 }

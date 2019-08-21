@@ -14,7 +14,8 @@ class Paddle
 {
 public:
     Paddle(int posX, int posY);
-    SDL_Rect getPaddleBlock() const;
+    SDL_Rect getBlock() const;
+    void setBlock(const SDL_Rect &b);
     void drawSelf(Renderer &rnd) const;
 
 private:
