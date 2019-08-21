@@ -19,7 +19,8 @@ enum EvenType
 enum SYM
 {
     SDLK_LEFT,
-    SDLK_RIGHT
+    SDLK_RIGHT,
+    SDLK_SPACE
 };
 
 typedef struct

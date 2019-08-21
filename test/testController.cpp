@@ -53,3 +53,17 @@ TEST_F(GameController, FireRightKeyFlagwhenPressed)
 
     ASSERT_THAT(controller.keyStatus(), Eq(KEYSTATUS::RIGHT_DOWN));
 }
+
+TEST_F(GameController, FireSpaceBarKeyFlagwhenPressed)
+{
+    e.type = SDL_KEYDOWN;
+    e.key.keysym.sym = SDLK_SPACE;
+
+    EXPECT_CALL(*_SDL_Mock, SDL_PollEvent(_))
+        .WillOnce(DoAll(SetArgPointee<0>(e), Return(1)))
+        .WillOnce(Return(0));
+
+    controller.handleEvent();
+
+    ASSERT_THAT(controller.keyStatus(), Eq(KEYSTATUS::SPACE_DOWN));
+}

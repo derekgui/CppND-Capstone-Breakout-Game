@@ -11,6 +11,7 @@ enum class KEYSTATUS
 {
     LEFT_DOWN,
     RIGHT_DOWN,
+    SPACE_DOWN,
     STAT_DEFAULT
 };
 

@@ -13,12 +13,21 @@ void Controller::handleEvent()
             m_isAvailable = false;
         else if (e.type == SDL_KEYDOWN)
         {
-            if (e.key.keysym.sym == SDLK_LEFT)
+            switch (e.key.keysym.sym)
+            {
+            case SDLK_LEFT:
                 m_keyStatus = KEYSTATUS::LEFT_DOWN;
-            else if (e.key.keysym.sym == SDLK_RIGHT)
+                break;
+            case SDLK_RIGHT:
                 m_keyStatus = KEYSTATUS::RIGHT_DOWN;
-            else
+                break;
+            case SDLK_SPACE:
+                m_keyStatus = KEYSTATUS::SPACE_DOWN;
+                break;
+            default:
                 m_keyStatus = KEYSTATUS::STAT_DEFAULT;
+                break;
+            }
         }
     }
 }
