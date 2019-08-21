@@ -52,3 +52,8 @@ void Renderer::drawRect(const SDL_Rect *rect,
     SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
     SDL_RenderFillRect(m_renderer, rect);
 }
+
+SDL_Renderer *Renderer::get() const noexcept
+{
+    return m_renderer;
+}

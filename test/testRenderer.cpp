@@ -99,3 +99,12 @@ TEST_F(GameRenderer, DrawRect)
 
     renderer.drawRect(&block, 0xff, 0xff, 0xff, 0xff);
 }
+
+TEST_F(GameRenderer, ReturnRendererRawPointWhenGet)
+{
+    ON_CALL(*_SDL_Mock, SDL_CreateRenderer(_, -1, _)).WillByDefault(Return(test_renderer.get()));
+
+    renderer.init(wnd);
+
+    ASSERT_THAT(renderer.get(), Eq(test_renderer.get()));
+}

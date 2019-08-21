@@ -29,6 +29,8 @@ public:
                   Uint8 b,
                   Uint8 a);
 
+    SDL_Renderer *get() const noexcept;
+
 private:
     bool m_isActive;
     SDL_Renderer *m_renderer;

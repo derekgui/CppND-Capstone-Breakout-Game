@@ -73,7 +73,7 @@ TEST_F(MainGameWindow, IsActiveAfterProperInitialization)
     ASSERT_THAT(wnd.isActive(), true);
 }
 
-TEST_F(MainGameWindow, ReturnWindowRawAddressWhenGet)
+TEST_F(MainGameWindow, ReturnWindowRawPointWhenGet)
 {
     arrangeWindowCreation(test_window.get());
 
