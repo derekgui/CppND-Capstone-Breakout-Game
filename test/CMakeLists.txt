@@ -1,4 +1,4 @@
-add_library(sdl_fake OBJECT SDL_Fake.h)
+add_library(sdl_fake OBJECT SDL_Fake.h SDL_Fake.cpp)
 target_link_libraries(sdl_fake
                       gmock_main)
 
