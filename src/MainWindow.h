@@ -24,10 +24,11 @@ public:
     SDL_Window *get() const noexcept;
     void UpdateWindowTitle(int score, int fps);
 
-private:
+public:
     static constexpr int SCREEN_WIDTH = 640;
     static constexpr int SCREEN_HEIGHT = 640;
 
+private:
     bool m_isActive{false};
     SDL_Window *m_window{NULL};
     int m_screenPosX;
