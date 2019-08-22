@@ -34,7 +34,11 @@ bool Renderer::isActive() const
 
 void Renderer::clearScreen()
 {
-    SDL_SetRenderDrawColor(m_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+    SDL_SetRenderDrawColor(m_renderer,
+                           Colors::Black.GetR(),
+                           Colors::Black.GetG(),
+                           Colors::Black.GetB(),
+                           Colors::Black.GetA());
     SDL_RenderClear(m_renderer);
 }
 
