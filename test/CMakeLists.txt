@@ -11,6 +11,8 @@ elseif(${TESTING} STREQUAL "Renderer")
     add_executable(test testRenderer.cpp)
 elseif(${TESTING} STREQUAL "Paddle")
     add_executable(test testPaddle.cpp)
+elseif(${TESTING} STREQUAL "BaseBlock")
+    add_executable(test testBaseBlock.cpp)
 endif()
 
 target_link_libraries(test sdl_fake)

@@ -7,24 +7,20 @@
 #else
 #include "SDL2/SDL.h"
 #endif
+#include "BaseBlock.h"
 #include "Controller.h"
 #include "Renderer.h"
 
-class Paddle
+class Paddle : public BaseBlock
 {
 public:
-    Paddle(int posX, int posY);
-    SDL_Rect getBlock() const;
-    void setBlock(const SDL_Rect &b);
-    void drawSelf(Renderer &rnd) const;
+    Paddle(SDL_Rect paddleBlock, Color c);
     void ClampToScreen();
-    void update(const Controller &ctlr);
+    virtual void update(const Controller &ctlr);
 
 private:
-    static constexpr int width = 32 * 6;
-    static constexpr int height = 32 * 6;
+    int m_size;
     static constexpr float speed = 1;
-    SDL_Rect m_paddleBlock;
 };
 
 #endif

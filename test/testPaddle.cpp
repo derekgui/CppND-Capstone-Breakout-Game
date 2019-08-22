@@ -1,13 +1,14 @@
 #include "../src/Controller.cpp"
 #include "../src/MainWindow.cpp"
 #include "../src/Renderer.cpp"
+#include "../src/BaseBlock.cpp"
 #include "../src/Paddle.cpp"
 
 class GamePaddle : public TestFixture
 {
 public:
-    Paddle paddle{0, 0};
-    SDL_Rect testBlock{0, 0, 32 * 6, 32 * 6};
+    SDL_Rect testBlock{0, 0, 32 * 6, 32};
+    Paddle paddle{testBlock, Colors::Red};
     Controller ctlr;
     MainWindow wnd;
     Renderer rnd{wnd};
@@ -43,14 +44,14 @@ TEST_F(GamePaddle, PaddleBlockSizeAdjustable)
 {
     SDL_Rect block{2, 2, 32 * 3, 32 * 3};
 
-    paddle.setBlock(block);
+    paddle.setBlock() = block;
 
     ASSERT_THAT(paddle.getBlock(), EqBlock(block));
 }
 
 TEST_F(GamePaddle, ClampToLeftScreenWhenPositionXLessThanZero)
 {
-    paddle.setBlock({-1, 0, 32 * 6, 32 * 6});
+    paddle.setBlock().x = -1;
 
     paddle.ClampToScreen();
 
@@ -59,9 +60,9 @@ TEST_F(GamePaddle, ClampToLeftScreenWhenPositionXLessThanZero)
 
 TEST_F(GamePaddle, ClampToRightScreenWhenPositionXGreaterThanWidth)
 {
-    SDL_Rect rightAlignBlock{MainWindow::SCREEN_WIDTH - 1 - 32 * 6, 0, 32 * 6, 32 * 6};
+    SDL_Rect rightAlignBlock{MainWindow::SCREEN_WIDTH - 1 - 32 * 6, 0, 32 * 6, 32};
 
-    paddle.setBlock({MainWindow::SCREEN_WIDTH + 1, 0, 32 * 6, 32 * 6});
+    paddle.setBlock().x = MainWindow::SCREEN_WIDTH + 1;
 
     paddle.ClampToScreen();
 
@@ -79,7 +80,7 @@ TEST_F(GamePaddle, UpdatePositionToLeftWhenLeftKeyDown)
 
     ctlr.handleEvent();
 
-    paddle.setBlock({MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32});
+    paddle.setBlock() = {MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32};
 
     paddle.update(ctlr);
 
@@ -97,7 +98,7 @@ TEST_F(GamePaddle, UpdatePositionToRightWhenRightKeyDown)
 
     ctlr.handleEvent();
 
-    paddle.setBlock({MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32});
+    paddle.setBlock() = {MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32};
 
     paddle.update(ctlr);
 
