@@ -5,19 +5,20 @@
 class Ball : public BaseBlock
 {
 public:
-    Ball(SDL_Rect brickBlock, Color c) : BaseBlock(brickBlock, c)
+    Ball(SDL_Rect brickBlock, Color c, bool isFixed)
+        : BaseBlock(brickBlock, c, isFixed)
     {
     }
 
 private:
 };
 
-class GameBrick : public TestFixture
+class GameBall : public TestFixture
 {
 public:
-    SDL_Rect testBlock{0, 0, 32 * 4, 32 * 2};
-    Color color = Colors::Yellow;
-    Ball ball{testBlock, color};
+    SDL_Rect testBlock{0, 0, 32, 32};
+    Color color = Colors::Red;
+    Ball ball{testBlock, color, false};
 };
 
 MATCHER_P(EqBlock, expected, "")
@@ -25,7 +26,7 @@ MATCHER_P(EqBlock, expected, "")
     return arg.x == expected.x && arg.y == expected.y && arg.w == expected.w && arg.h == expected.h;
 }
 
-TEST_F(GameBrick, BallBlockInitializedAfterCreation)
+TEST_F(GameBall, BallBlockInitializedAfterCreation)
 {
     ASSERT_THAT(ball.getBlock(), EqBlock(testBlock));
 }

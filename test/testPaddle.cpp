@@ -8,7 +8,7 @@ class GamePaddle : public TestFixture
 {
 public:
     SDL_Rect testBlock{0, 0, 32 * 6, 32};
-    Paddle paddle{testBlock, Colors::Red};
+    Paddle paddle{testBlock, Colors::Red, true};
     Controller ctlr;
     MainWindow wnd;
     Renderer rnd{wnd};
@@ -103,4 +103,11 @@ TEST_F(GamePaddle, UpdatePositionToRightWhenRightKeyDown)
     paddle.update(ctlr);
 
     ASSERT_THAT(paddle.getBlock().x, Eq(MainWindow::SCREEN_WIDTH / 2 + 1));
+}
+
+TEST_F(GamePaddle, BlockWidthDownToHalfWhenShrink)
+{
+    paddle.shrink();
+
+    ASSERT_THAT(paddle.getBlock().w, Eq(3 * 32));
 }

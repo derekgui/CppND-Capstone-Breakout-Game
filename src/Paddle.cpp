@@ -1,7 +1,7 @@
 #include "Paddle.h"
 
-Paddle::Paddle(SDL_Rect paddleBlock, Color c)
-    : BaseBlock(paddleBlock, c),
+Paddle::Paddle(SDL_Rect paddleBlock, Color c, bool isFixed)
+    : BaseBlock(paddleBlock, c, isFixed),
       m_size(paddleBlock.w / baseBlockWidth)
 {
 }
@@ -26,4 +26,10 @@ void Paddle::update(const Controller &ctlr)
     {
         setBlock().x += speed;
     }
+}
+
+void Paddle::shrink()
+{
+    m_size = (getBlock().w / baseBlockWidth) / 2;
+    setBlock().w = m_size * baseBlockWidth;
 }

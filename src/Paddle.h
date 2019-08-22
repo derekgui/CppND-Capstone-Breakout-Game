@@ -14,9 +14,10 @@
 class Paddle : public BaseBlock
 {
 public:
-    Paddle(SDL_Rect paddleBlock, Color c);
+    Paddle(SDL_Rect paddleBlock, Color c, bool isFixed);
     void ClampToScreen();
-    virtual void update(const Controller &ctlr);
+    void update(const Controller &ctlr);
+    void shrink();
 
 private:
     int m_size;

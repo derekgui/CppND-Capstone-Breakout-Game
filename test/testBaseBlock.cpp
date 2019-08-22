@@ -2,11 +2,11 @@
 #include "../src/Renderer.cpp"
 #include "../src/BaseBlock.cpp"
 
-class GamePaddle : public TestFixture
+class ABaseBlock : public TestFixture
 {
 public:
     SDL_Rect testBlock{0, 0, 32 * 6, 32};
-    BaseBlock baseBlock{testBlock, Colors::Red};
+    BaseBlock baseBlock{testBlock, Colors::Red, true};
     MainWindow wnd;
     Renderer rnd{wnd};
     SDL_Event e;
@@ -17,12 +17,12 @@ MATCHER_P(EqBlock, expected, "")
     return arg.x == expected.x && arg.y == expected.y && arg.w == expected.w && arg.h == expected.h;
 }
 
-TEST_F(GamePaddle, PaddleBlockInitializedAfterCreation)
+TEST_F(ABaseBlock, InitializedAfterCreation)
 {
     ASSERT_THAT(baseBlock.getBlock(), EqBlock(testBlock));
 }
 
-TEST_F(GamePaddle, DrawSelfOntoGraphicFrame)
+TEST_F(ABaseBlock, DrawSelfOntoGraphicFrame)
 {
     Color c = Colors::Red;
 
@@ -37,7 +37,12 @@ TEST_F(GamePaddle, DrawSelfOntoGraphicFrame)
     baseBlock.drawSelf(rnd);
 }
 
-TEST_F(GamePaddle, PaddleBlockSizeAdjustable)
+TEST_F(ABaseBlock, ReturnMovabilityAfterCreation)
+{
+    ASSERT_THAT(baseBlock.isFixed(), Eq(true));
+}
+
+TEST_F(ABaseBlock, PaddleBlockSizeAdjustable)
 {
     SDL_Rect block{2, 2, 32 * 3, 32 * 3};
 
