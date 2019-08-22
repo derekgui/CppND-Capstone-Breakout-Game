@@ -13,6 +13,8 @@ elseif(${TESTING} STREQUAL "Paddle")
     add_executable(test testPaddle.cpp)
 elseif(${TESTING} STREQUAL "BaseBlock")
     add_executable(test testBaseBlock.cpp)
+elseif(${TESTING} STREQUAL "Brick")
+    add_executable(test testBrick.cpp)
 endif()
 
 target_link_libraries(test sdl_fake)
