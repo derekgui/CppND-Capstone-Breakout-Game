@@ -7,6 +7,7 @@
 #else
 #include "SDL2/SDL.h"
 #endif
+
 enum class KEYSTATUS
 {
     LEFT_DOWN,

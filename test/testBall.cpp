@@ -1,17 +1,8 @@
 #include "../src/MainWindow.cpp"
 #include "../src/Renderer.cpp"
+#include "../src/Paddle.cpp"
 #include "../src/BaseBlock.cpp"
-
-class Ball : public BaseBlock
-{
-public:
-    Ball(SDL_Rect brickBlock, Color c, bool isFixed)
-        : BaseBlock(brickBlock, c, isFixed)
-    {
-    }
-
-private:
-};
+#include "../src/Ball.cpp"
 
 class GameBall : public TestFixture
 {
@@ -29,4 +20,13 @@ MATCHER_P(EqBlock, expected, "")
 TEST_F(GameBall, BallBlockInitializedAfterCreation)
 {
     ASSERT_THAT(ball.getBlock(), EqBlock(testBlock));
+}
+
+TEST_F(GameBall, IsNotCollideIfItsBottomPostionGreaterThanAnothersTop)
+{
+    SDL_Rect paddleBlock{0, 64, 32 * 6, 32};
+
+    Paddle paddle{paddleBlock, Colors::Red, false};
+
+    ASSERT_THAT(ball.checkCollision(paddle), Eq(true));
 }

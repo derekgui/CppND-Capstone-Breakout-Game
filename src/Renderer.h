@@ -1,13 +1,6 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#define SDL_FAKE_ON
-#ifdef SDL_FAKE_ON
-#include "../test/SDL_Fake.h"
-#else
-#include "SDL2/SDL.h"
-#endif
-
 #include "MainWindow.h"
 #include "Colors.h"
 
