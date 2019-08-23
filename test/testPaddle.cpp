@@ -22,7 +22,7 @@ MATCHER_P(EqBlock, expected, "")
 
 TEST_F(GamePaddle, PaddleBlockInitializedAfterCreation)
 {
-    ASSERT_THAT(paddle.getBlock(), EqBlock(testBlock));
+    ASSERT_THAT(paddle.Block(), EqBlock(testBlock));
 }
 
 TEST_F(GamePaddle, DrawSelfOntoGraphicFrame)
@@ -44,29 +44,29 @@ TEST_F(GamePaddle, PaddleBlockSizeAdjustable)
 {
     SDL_Rect block{2, 2, 32 * 3, 32 * 3};
 
-    paddle.setBlock() = block;
+    paddle.Block() = block;
 
-    ASSERT_THAT(paddle.getBlock(), EqBlock(block));
+    ASSERT_THAT(paddle.Block(), EqBlock(block));
 }
 
 TEST_F(GamePaddle, ClampToLeftScreenWhenPositionXLessThanZero)
 {
-    paddle.setBlock().x = -1;
+    paddle.Block().x = -1;
 
     paddle.ClampToScreen();
 
-    ASSERT_THAT(paddle.getBlock(), EqBlock(testBlock));
+    ASSERT_THAT(paddle.Block(), EqBlock(testBlock));
 }
 
 TEST_F(GamePaddle, ClampToRightScreenWhenPositionXGreaterThanWidth)
 {
     SDL_Rect rightAlignBlock{MainWindow::SCREEN_WIDTH - 1 - 32 * 6, 0, 32 * 6, 32};
 
-    paddle.setBlock().x = MainWindow::SCREEN_WIDTH + 1;
+    paddle.Block().x = MainWindow::SCREEN_WIDTH + 1;
 
     paddle.ClampToScreen();
 
-    ASSERT_THAT(paddle.getBlock(), EqBlock(rightAlignBlock));
+    ASSERT_THAT(paddle.Block(), EqBlock(rightAlignBlock));
 }
 
 TEST_F(GamePaddle, UpdatePositionToLeftWhenLeftKeyDown)
@@ -80,11 +80,11 @@ TEST_F(GamePaddle, UpdatePositionToLeftWhenLeftKeyDown)
 
     ctlr.handleEvent();
 
-    paddle.setBlock() = {MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32};
+    paddle.Block() = {MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32};
 
     paddle.update(ctlr);
 
-    ASSERT_THAT(paddle.getBlock().x, Eq(MainWindow::SCREEN_WIDTH / 2 - 1));
+    ASSERT_THAT(paddle.Block().x, Eq(MainWindow::SCREEN_WIDTH / 2 - 1));
 }
 
 TEST_F(GamePaddle, UpdatePositionToRightWhenRightKeyDown)
@@ -98,16 +98,16 @@ TEST_F(GamePaddle, UpdatePositionToRightWhenRightKeyDown)
 
     ctlr.handleEvent();
 
-    paddle.setBlock() = {MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32};
+    paddle.Block() = {MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT / 2, 6 * 32, 6 * 32};
 
     paddle.update(ctlr);
 
-    ASSERT_THAT(paddle.getBlock().x, Eq(MainWindow::SCREEN_WIDTH / 2 + 1));
+    ASSERT_THAT(paddle.Block().x, Eq(MainWindow::SCREEN_WIDTH / 2 + 1));
 }
 
 TEST_F(GamePaddle, BlockWidthDownToHalfWhenShrink)
 {
     paddle.shrink();
 
-    ASSERT_THAT(paddle.getBlock().w, Eq(3 * 32));
+    ASSERT_THAT(paddle.Block().w, Eq(3 * 32));
 }

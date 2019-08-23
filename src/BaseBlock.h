@@ -14,8 +14,8 @@ class BaseBlock
 {
 public:
     BaseBlock(SDL_Rect block, Color c, bool isFixed);
-    const SDL_Rect &getBlock() const;
-    SDL_Rect &setBlock();
+    const SDL_Rect &Block() const;
+    SDL_Rect &Block();
     void drawSelf(Renderer &rnd) const;
     bool isFixed() const;
 

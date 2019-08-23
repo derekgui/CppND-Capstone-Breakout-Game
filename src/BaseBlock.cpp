@@ -7,12 +7,12 @@ BaseBlock::BaseBlock(SDL_Rect block, Color c, bool isFixed)
 {
 }
 
-const SDL_Rect &BaseBlock::getBlock() const
+const SDL_Rect &BaseBlock::Block() const
 {
     return m_block;
 }
 
-SDL_Rect &BaseBlock::setBlock()
+SDL_Rect &BaseBlock::Block()
 {
     return m_block;
 }

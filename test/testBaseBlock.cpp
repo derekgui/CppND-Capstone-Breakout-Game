@@ -19,7 +19,7 @@ MATCHER_P(EqBlock, expected, "")
 
 TEST_F(ABaseBlock, InitializedAfterCreation)
 {
-    ASSERT_THAT(baseBlock.getBlock(), EqBlock(testBlock));
+    ASSERT_THAT(baseBlock.Block(), EqBlock(testBlock));
 }
 
 TEST_F(ABaseBlock, DrawSelfOntoGraphicFrame)
@@ -46,7 +46,7 @@ TEST_F(ABaseBlock, PaddleBlockSizeAdjustable)
 {
     SDL_Rect block{2, 2, 32 * 3, 32 * 3};
 
-    baseBlock.setBlock() = block;
+    baseBlock.Block() = block;
 
-    ASSERT_THAT(baseBlock.getBlock(), EqBlock(block));
+    ASSERT_THAT(baseBlock.Block(), EqBlock(block));
 }

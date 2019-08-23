@@ -15,6 +15,7 @@ public:
     bool checkCollision(const BaseBlock &block);
     const Vel &velocity() const;
     Vel &velocity();
+    void update();
 
 private:
     Vel m_vel{0, 0};

@@ -7,15 +7,15 @@ Ball::Ball(SDL_Rect brickBlock, Color c, bool isFixed)
 
 bool Ball::checkCollision(const BaseBlock &block)
 {
-    int ball_top = getBlock().y;
-    int ball_bottom = getBlock().y + getBlock().h;
-    int ball_left = getBlock().x;
-    int ball_right = getBlock().x + getBlock().w;
+    int ball_top = Block().y;
+    int ball_bottom = Block().y + Block().h;
+    int ball_left = Block().x;
+    int ball_right = Block().x + Block().w;
 
-    int block_top = block.getBlock().y;
-    int block_bottom = block.getBlock().y + block.getBlock().h;
-    int block_left = block.getBlock().x;
-    int block_right = block.getBlock().x + block.getBlock().w;
+    int block_top = block.Block().y;
+    int block_bottom = block.Block().y + block.Block().h;
+    int block_left = block.Block().x;
+    int block_right = block.Block().x + block.Block().w;
 
     if (ball_bottom <= block_top)
         return false;
@@ -37,4 +37,16 @@ const Vel &Ball::velocity() const
 Vel &Ball::velocity()
 {
     return m_vel;
+}
+
+void Ball::update()
+{
+    Block().x += m_vel.vx;
+    Block().y += m_vel.vy;
+
+    if (Block().x < 0)
+    {
+        Block().x = 0;
+        m_vel.vx = -m_vel.vx;
+    }
 }

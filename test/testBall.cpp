@@ -20,7 +20,7 @@ MATCHER_P(EqBlock, expected, "")
 
 TEST_F(GameBall, BallBlockInitializedAfterCreation)
 {
-    ASSERT_THAT(ball.getBlock(), EqBlock(testBlock));
+    ASSERT_THAT(ball.Block(), EqBlock(testBlock));
 }
 
 TEST_F(GameBall, IsNotCollideIfItsBottomlessThanAnothersTop)
@@ -34,7 +34,7 @@ TEST_F(GameBall, IsNotCollideIfItsBottomlessThanAnothersTop)
 
 TEST_F(GameBall, IsNotCollideIfItsTopGreatThanAnothersBottom)
 {
-    ball.setBlock().y = 64;
+    ball.Block().y = 64;
 
     SDL_Rect paddleBlock{0, 0, 32 * 6, 32};
 
@@ -54,7 +54,7 @@ TEST_F(GameBall, IsNotCollideIfItsRightLessThanAnothersLeft)
 
 TEST_F(GameBall, IsNotCollideIfItsLeftGreatThanAnothersRight)
 {
-    ball.setBlock().x = 32 * 6 + 1;
+    ball.Block().x = 32 * 6 + 1;
 
     SDL_Rect paddleBlock{0, 0, 32 * 6, 32};
 
@@ -76,4 +76,26 @@ TEST_F(GameBall, SetVelocityToAValue)
 
     ASSERT_THAT(ball.velocity().vx, Eq(2));
     ASSERT_THAT(ball.velocity().vy, Eq(3));
+}
+
+TEST_F(GameBall, UpdateBallPositionWithVelocity)
+{
+    ball.velocity().vx = 2;
+    ball.velocity().vy = 3;
+
+    ball.update();
+
+    ASSERT_THAT(ball.Block().x, Eq(2));
+    ASSERT_THAT(ball.Block().y, Eq(3));
+}
+
+TEST_F(GameBall, BounceBackIfTheBallHitLeftScreenBoundary)
+{
+    ball.velocity().vx = 1;
+    ball.Block().x = -2;
+
+    ball.update();
+
+    ASSERT_THAT(ball.Block().x, Eq(0));
+    ASSERT_THAT(ball.velocity().vx, Eq(-1));
 }
