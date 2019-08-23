@@ -26,7 +26,9 @@ bool Ball::checkCollision(const BaseBlock &block)
     if (ball_left >= block_right)
         return false;
 
-    return true;
+    isColliding = true;
+
+    return isColliding;
 }
 
 const Vel &Ball::velocity() const
@@ -44,9 +46,34 @@ void Ball::update()
     Block().x += m_vel.vx;
     Block().y += m_vel.vy;
 
+    const int right = Block().x + Block().w;
+
     if (Block().x < 0)
     {
         Block().x = 0;
         m_vel.vx = -m_vel.vx;
+    }
+    else if (right >= MainWindow::SCREEN_WIDTH)
+    {
+        Block().x = MainWindow::SCREEN_WIDTH - 1 - Block().w;
+        m_vel.vx = -m_vel.vx;
+    }
+
+    const int bottom = Block().y + Block().h;
+    if (Block().y < 0)
+    {
+        Block().y = 0;
+        m_vel.vy = -m_vel.vy;
+    }
+    else if (bottom >= MainWindow::SCREEN_HEIGHT)
+    {
+        Block().y = MainWindow::SCREEN_HEIGHT - 1 - Block().h;
+        m_vel.vy = -m_vel.vy;
+    }
+
+    if (isColliding)
+    {
+        m_vel.vy = -m_vel.vy;
+        isColliding = false;
     }
 }

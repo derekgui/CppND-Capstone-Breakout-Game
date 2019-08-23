@@ -19,6 +19,7 @@ public:
 
 private:
     Vel m_vel{0, 0};
+    bool isColliding{false};
 };
 
 #endif
