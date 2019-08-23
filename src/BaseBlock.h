@@ -13,11 +13,12 @@
 class BaseBlock
 {
 public:
-    BaseBlock(SDL_Rect block, Color c, bool isFixed);
+    BaseBlock(SDL_Rect block, Color c);
     const SDL_Rect &Block() const;
     SDL_Rect &Block();
     void drawSelf(Renderer &rnd) const;
     bool isFixed() const;
+    const Color &getColor() const;
 
 protected:
     static constexpr int baseBlockWidth = 32;
@@ -26,7 +27,6 @@ protected:
 private:
     SDL_Rect m_block;
     Color m_color;
-    bool m_isFixed;
 };
 
 #endif

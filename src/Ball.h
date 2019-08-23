@@ -11,7 +11,7 @@ struct Vel
 class Ball : public BaseBlock
 {
 public:
-    Ball(SDL_Rect brickBlock, Color c, bool isFixed);
+    Ball(SDL_Rect brickBlock, Color c);
     bool checkCollision(const BaseBlock &block);
     const Vel &velocity() const;
     Vel &velocity();

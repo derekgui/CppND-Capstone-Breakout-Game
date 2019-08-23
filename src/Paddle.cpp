@@ -1,8 +1,8 @@
 #include "Paddle.h"
 #include "Renderer.h"
 
-Paddle::Paddle(SDL_Rect paddleBlock, Color c, bool isFixed)
-    : BaseBlock(paddleBlock, c, isFixed),
+Paddle::Paddle(SDL_Rect paddleBlock, Color c)
+    : BaseBlock(paddleBlock, c),
       m_size(paddleBlock.w / baseBlockWidth)
 {
 }

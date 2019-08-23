@@ -1,7 +1,7 @@
 #include "Ball.h"
 
-Ball::Ball(SDL_Rect brickBlock, Color c, bool isFixed)
-    : BaseBlock(brickBlock, c, isFixed)
+Ball::Ball(SDL_Rect brickBlock, Color c)
+    : BaseBlock(brickBlock, c)
 {
 }
 

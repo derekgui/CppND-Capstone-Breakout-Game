@@ -10,7 +10,7 @@ class GameBall : public TestFixture
 public:
     SDL_Rect testBlock{0, 0, 32, 32};
     Color color = Colors::Red;
-    Ball ball{testBlock, color, false};
+    Ball ball{testBlock, color};
 };
 
 MATCHER_P(EqBlock, expected, "")
@@ -27,7 +27,7 @@ TEST_F(GameBall, IsNotCollideIfItsBottomlessThanAnothersTop)
 {
     SDL_Rect paddleBlock{0, 64, 32 * 6, 32};
 
-    Paddle paddle{paddleBlock, Colors::Red, false};
+    Paddle paddle{paddleBlock, Colors::Red};
 
     ASSERT_THAT(ball.checkCollision(paddle), Eq(false));
 }
@@ -38,7 +38,7 @@ TEST_F(GameBall, IsNotCollideIfItsTopGreatThanAnothersBottom)
 
     SDL_Rect paddleBlock{0, 0, 32 * 6, 32};
 
-    Paddle paddle{paddleBlock, Colors::Red, false};
+    Paddle paddle{paddleBlock, Colors::Red};
 
     ASSERT_THAT(ball.checkCollision(paddle), Eq(false));
 }
@@ -47,7 +47,7 @@ TEST_F(GameBall, IsNotCollideIfItsRightLessThanAnothersLeft)
 {
     SDL_Rect paddleBlock{64, 0, 32 * 6, 32};
 
-    Paddle paddle{paddleBlock, Colors::Red, false};
+    Paddle paddle{paddleBlock, Colors::Red};
 
     ASSERT_THAT(ball.checkCollision(paddle), Eq(false));
 }
@@ -58,7 +58,7 @@ TEST_F(GameBall, IsNotCollideIfItsLeftGreatThanAnothersRight)
 
     SDL_Rect paddleBlock{0, 0, 32 * 6, 32};
 
-    Paddle paddle{paddleBlock, Colors::Red, false};
+    Paddle paddle{paddleBlock, Colors::Red};
 
     ASSERT_THAT(ball.checkCollision(paddle), Eq(false));
 }
@@ -70,7 +70,7 @@ TEST_F(GameBall, CheckCollidingSituation)
 
     SDL_Rect paddleBlock{0, 0, 32 * 6, 32};
 
-    Paddle paddle{paddleBlock, Colors::Red, false};
+    Paddle paddle{paddleBlock, Colors::Red};
 
     ASSERT_THAT(ball.checkCollision(paddle), Eq(true));
 }
@@ -157,7 +157,7 @@ TEST_F(GameBall, BounceBackIFTheBallHitAnotherBlock)
 
     SDL_Rect paddleBlock{0, 0, 32 * 6, 32};
 
-    Paddle paddle{paddleBlock, Colors::Red, false};
+    Paddle paddle{paddleBlock, Colors::Red};
 
     ball.checkCollision(paddle);
     ball.update();

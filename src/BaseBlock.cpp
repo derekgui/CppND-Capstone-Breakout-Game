@@ -1,9 +1,8 @@
 #include "BaseBlock.h"
 
-BaseBlock::BaseBlock(SDL_Rect block, Color c, bool isFixed)
+BaseBlock::BaseBlock(SDL_Rect block, Color c)
     : m_block(block),
-      m_color(c),
-      m_isFixed(isFixed)
+      m_color(c)
 {
 }
 
@@ -22,7 +21,7 @@ void BaseBlock::drawSelf(Renderer &rnd) const
     rnd.drawRect(&m_block, m_color);
 }
 
-bool BaseBlock::isFixed() const
+const Color &BaseBlock::getColor() const
 {
-    return m_isFixed;
+    return m_color;
 }

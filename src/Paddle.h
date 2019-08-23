@@ -7,7 +7,7 @@
 class Paddle : public BaseBlock
 {
 public:
-    Paddle(SDL_Rect paddleBlock, Color c, bool isFixed);
+    Paddle(SDL_Rect paddleBlock, Color c);
     void ClampToScreen();
     void update(const Controller &ctlr);
     void shrink();

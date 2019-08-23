@@ -6,7 +6,7 @@ class ABaseBlock : public TestFixture
 {
 public:
     SDL_Rect testBlock{0, 0, 32 * 6, 32};
-    BaseBlock baseBlock{testBlock, Colors::Red, true};
+    BaseBlock baseBlock{testBlock, Colors::Red};
     MainWindow wnd;
     Renderer rnd{wnd};
     SDL_Event e;
@@ -35,11 +35,6 @@ TEST_F(ABaseBlock, DrawSelfOntoGraphicFrame)
     EXPECT_CALL(*_SDL_Mock, SDL_RenderFillRect(rnd.get(), _)).Times(1);
 
     baseBlock.drawSelf(rnd);
-}
-
-TEST_F(ABaseBlock, ReturnMovabilityAfterCreation)
-{
-    ASSERT_THAT(baseBlock.isFixed(), Eq(true));
 }
 
 TEST_F(ABaseBlock, PaddleBlockSizeAdjustable)
