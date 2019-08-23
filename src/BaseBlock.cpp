@@ -21,7 +21,12 @@ void BaseBlock::drawSelf(Renderer &rnd) const
     rnd.drawRect(&m_block, m_color);
 }
 
-const Color &BaseBlock::getColor() const
+const Color &BaseBlock::blockColor() const
+{
+    return m_color;
+}
+
+Color &BaseBlock::blockColor()
 {
     return m_color;
 }

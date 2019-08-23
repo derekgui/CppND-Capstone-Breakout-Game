@@ -73,6 +73,7 @@ void Ball::update()
 
     if (isColliding)
     {
+        m_vel.vx = -m_vel.vx;
         m_vel.vy = -m_vel.vy;
         isColliding = false;
     }

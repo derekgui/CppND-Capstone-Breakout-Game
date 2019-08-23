@@ -18,7 +18,8 @@ public:
     SDL_Rect &Block();
     void drawSelf(Renderer &rnd) const;
     bool isFixed() const;
-    const Color &getColor() const;
+    const Color &blockColor() const;
+    Color &blockColor();
 
 protected:
     static constexpr int baseBlockWidth = 32;
