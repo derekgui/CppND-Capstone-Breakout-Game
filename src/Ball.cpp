@@ -28,3 +28,13 @@ bool Ball::checkCollision(const BaseBlock &block)
 
     return true;
 }
+
+const Vel &Ball::velocity() const
+{
+    return m_vel;
+}
+
+Vel &Ball::velocity()
+{
+    return m_vel;
+}

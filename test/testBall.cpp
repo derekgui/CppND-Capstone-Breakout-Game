@@ -62,3 +62,18 @@ TEST_F(GameBall, IsNotCollideIfItsLeftGreatThanAnothersRight)
 
     ASSERT_THAT(ball.checkCollision(paddle), Eq(false));
 }
+
+TEST_F(GameBall, DefaultVelocityToZeroAfterCreation)
+{
+    ASSERT_THAT(ball.velocity().vx, Eq(0));
+    ASSERT_THAT(ball.velocity().vy, Eq(0));
+}
+
+TEST_F(GameBall, SetVelocityToAValue)
+{
+    ball.velocity().vx = 2;
+    ball.velocity().vy = 3;
+
+    ASSERT_THAT(ball.velocity().vx, Eq(2));
+    ASSERT_THAT(ball.velocity().vy, Eq(3));
+}
