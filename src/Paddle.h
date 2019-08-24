@@ -14,7 +14,7 @@ public:
 
 private:
     int m_size;
-    static constexpr float speed = 1;
+    static constexpr float speed = 10;
 };
 
 #endif

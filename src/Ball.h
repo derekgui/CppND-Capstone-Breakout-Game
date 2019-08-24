@@ -18,7 +18,7 @@ public:
     void update();
 
 private:
-    Vel m_vel{0, 0};
+    Vel m_vel{5, 5};
     bool isColliding{false};
 };
 

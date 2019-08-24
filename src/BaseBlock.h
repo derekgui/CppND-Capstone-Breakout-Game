@@ -1,13 +1,6 @@
 #ifndef BaseBlock_H
 #define BaseBlock_H
 
-#define SDL_FAKE_ON
-#ifdef SDL_FAKE_ON
-#include "../test/SDL_Fake.h"
-#else
-#include "SDL2/SDL.h"
-#endif
-
 #include "Renderer.h"
 
 class BaseBlock
@@ -22,8 +15,8 @@ public:
     Color &blockColor();
 
 public:
-    static constexpr int baseBlockWidth = 32;
-    static constexpr int baseBlockHeight = 32;
+    static constexpr int baseBlockWidth = 16;
+    static constexpr int baseBlockHeight = 16;
 
 private:
     SDL_Rect m_block;

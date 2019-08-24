@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define SDL_FAKE_ON
+//#define SDL_FAKE_ON
 #ifdef SDL_FAKE_ON
 #include "../test/SDL_Fake.h"
 #else
