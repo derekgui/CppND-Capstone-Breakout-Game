@@ -9,26 +9,18 @@ public:
     Wall wall;
 };
 
-TEST_F(GameWall, MapIsLoadedAfterCreation)
-{
-    ASSERT_THAT(wall.isLoaded(), Eq(true));
-}
-
 MATCHER_P(EqBlock, expected, "")
 {
     return arg.x == expected.x && arg.y == expected.y && arg.w == expected.w && arg.h == expected.h;
 }
 
-TEST_F(GameWall, SetColorAndPostionoftheSpecificOne)
+TEST_F(GameWall, MapIsLoadedAfterCreation)
 {
-    SDL_Rect testBlock{0, 0, 32 * 2, 32};
-    int brickNumber = 0;
+    ASSERT_THAT(wall.isLoaded(), Eq(true));
+}
 
-    wall.setBrick(brickNumber)->Block().w = 32 * 2;
-    wall.setBrick(brickNumber)->Block().h = 32;
+TEST_F(GameWall, ReturnTheCorrespodingBrickWhenGet)
+{
+    int brickNumber;
 
-    wall.setBrick(brickNumber)->blockColor() = Colors::Yellow;
-
-    ASSERT_THAT(wall.getBrick(brickNumber)->Block(), EqBlock(testBlock));
-    ASSERT_THAT(wall.getBrick(brickNumber)->blockColor(), Eq(Colors::Yellow));
 }

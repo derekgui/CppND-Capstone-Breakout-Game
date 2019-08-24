@@ -2,15 +2,16 @@
 #define WALL_H
 #include <fstream>
 #include <unordered_map>
-#include "BaseBlock.h"
+#include "Ball.h"
 
 enum BrickType
 {
-    Black,
+    Broken,
     Yellow,
     Green,
     Orange,
-    Red
+    Red,
+    TotalTypes
 };
 
 class Wall
@@ -19,13 +20,16 @@ public:
     Wall();
     ~Wall();
     bool isLoaded() const;
-    const BaseBlock *getBrick(int brickNumber) const;
-    BaseBlock *setBrick(int brickNumber);
+    void initBricks();
+    void drawSelf(Renderer &rnd);
+    void update(Ball &ball);
 
 private:
+    static constexpr int brickWidth = BaseBlock::baseBlockWidth * 2;
+    static constexpr int brickHeight = BaseBlock::baseBlockHeight;
     bool m_isLoaded{false};
-    std::ifstream inf;
-    std::unordered_map<int, BaseBlock *> m_bricks;
+    std::ifstream m_inf;
+    std::unordered_map<int, BaseBlock> m_bricks;
 };
 
 #endif

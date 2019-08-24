@@ -25,6 +25,8 @@ bool Ball::checkCollision(const BaseBlock &block)
         return false;
     if (ball_left >= block_right)
         return false;
+    if (block.blockColor() == Colors::Black)
+        return false;
 
     isColliding = true;
 

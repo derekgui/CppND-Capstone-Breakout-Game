@@ -21,7 +21,7 @@ public:
     const Color &blockColor() const;
     Color &blockColor();
 
-protected:
+public:
     static constexpr int baseBlockWidth = 32;
     static constexpr int baseBlockHeight = 32;
 
