@@ -7,7 +7,6 @@
 #include "Paddle.h"
 #include "Ball.h"
 #include "Wall.h"
-#include "FrameTimer.h"
 
 class Game
 {
@@ -32,7 +31,6 @@ private:
     Ball ball;
     Paddle paddle;
     Wall wall;
-    FrameTimer frameTimer;
     bool isTurnLost{false};
     bool isGameStarted{false};
     bool isGameOver{false};

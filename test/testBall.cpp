@@ -75,10 +75,10 @@ TEST_F(GameBall, CheckCollidingSituation)
     ASSERT_THAT(ball.checkCollision(paddle), Eq(true));
 }
 
-TEST_F(GameBall, DefaultVelocityToZeroAfterCreation)
+TEST_F(GameBall, DefaultVelocityAfterCreation)
 {
-    ASSERT_THAT(ball.velocity().vx, Eq(0));
-    ASSERT_THAT(ball.velocity().vy, Eq(0));
+    ASSERT_THAT(ball.velocity().vx, Eq(5));
+    ASSERT_THAT(ball.velocity().vy, Eq(5));
 }
 
 TEST_F(GameBall, SetVelocityToAValue)
