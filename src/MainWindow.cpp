@@ -54,6 +54,6 @@ SDL_Window *MainWindow::get() const noexcept
 
 void MainWindow::UpdateWindowTitle(int score, int fps)
 {
-    std::string title{"Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+    std::string title{"Score: " + std::to_string(score) + " Round: " + std::to_string(fps)};
     SDL_SetWindowTitle(m_window, title.c_str());
 }

@@ -89,6 +89,24 @@ void Wall::update(Ball &ball)
 
     if (it != m_bricks.end())
     {
+        countBrokenBricks(it->second);
         m_bricks.erase(it);
     }
+}
+
+BrokenCounter &Wall::getBrokenBricks()
+{
+    return brokenCounter;
+}
+
+void Wall::countBrokenBricks(const BaseBlock &brick)
+{
+    if (brick.blockColor() == Colors::Yellow)
+        brokenCounter.yellow++;
+    if (brick.blockColor() == Colors::Green)
+        brokenCounter.green++;
+    if (brick.blockColor() == Colors::Orange)
+        brokenCounter.orange++;
+    if (brick.blockColor() == Colors::Red)
+        brokenCounter.red++;
 }

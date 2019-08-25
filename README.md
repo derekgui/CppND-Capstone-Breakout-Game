@@ -11,7 +11,7 @@ The core game logic according to [Wikipedia](https://en.wikipedia.org/wiki/Break
 4. The player has three turns to try to clear two screens of bricks. 
 5. Yellow bricks earn one point each, green bricks earn three points, orange bricks earn five points and the top-level red bricks score seven points each. 
 6. The paddle shrinks to one-half its size after the ball has broken through the red row and hit the upper wall. 
-7. Ball speed increases at specific intervals: after four hits, after twelve hits, and after making contact with the orange and red rows.
+7. Ball speed increases at specific intervals: after four hits, eight hits, after twelve hits.
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
