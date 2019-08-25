@@ -32,13 +32,11 @@ The core game logic according to [Wikipedia](https://en.wikipedia.org/wiki/Break
 
 When cloning this project, be sure to use the `--recurse-submodules` flag. Using HTTPS:
 ```
-git clone https://github.com/derekgui/CppND-Capstone-Breakout-Game.git 
---recurse-submodules
+git clone https://github.com/derekgui/CppND-Capstone-Breakout-Game.git --recurse-submodules
 ```
 or with SSH:
 ```
-git clone git@github.com:derekgui/CppND-Capstone-Breakout-Game.git 
---recurse-submodules
+git clone git@github.com:derekgui/CppND-Capstone-Breakout-Game.git --recurse-submodules
 ```
 
 ## Compiling and Running
@@ -53,14 +51,49 @@ From within the `build` directory, then run `cmake` and `make` as follows:
 cmake ..
 make
 ```
-### Run Testing
-
-The executables will be placed in the `bin` directory. From within `build`, you can run the project as follows:
-```
-../bin/test
-```
 ### Run Game
 From within `build`, you can run the project as follows:
 ```
 ../bin/SDL2Breakout
 ```
+## Testing
+
+For unit tests, select approprate test cpp file with the `-DTESTING` flag in `cmake`. 
+Comment out ``` #define SDL_FAKE_ON ``` to include the test mocks. Then build and run from the build directory:
+```
+cmake -DTESTING="Controller" ..
+make
+../bin/test
+```
+Here is a table of given unit test below with `-DTESTING` string for reference:
+
+| `-DTESTING` String Value |
+|:------------------------:|
+|        "Controller"      |
+|        "MainWindow"      |
+|        "Renderer"        |
+|        "BaseBlock"       |
+|        "Paddle"          |
+|        "Ball"            |
+
+## Addressed Rubics
+Here is a table of addressed rubics and corresponding files:
+
+|           Rubics            |           place           |
+|-----------------------------|:-------------------------:|
+| Functions and Controls      |         All files         |
+| Read and process from file  |       Wall.cpp line 4     |
+| User input and process      |  Controller.cpp line 11   |
+| Use classes                 |        All classes        |
+| Use access specifiers       |        All classes        |
+| Use member lists initialize |        All classes        |
+| Abstract implement details  |        All classes        |
+| Encapsulate                 |        All classes        |
+| Inheritance hierarchy       |       BaseBlock\Ball      |
+| Inheritance hierarchy       |       BaseBlock\Paddle    |
+| Function Overload           | BaseBlock line 9 14 24 29 |
+| Use References              |        All classes        |
+| Use destructors             | MainWindow/Renderer/Wall  |
+| RAII                        | MainWindow/Renderer/Wall  |
+| Move semantics              |     Wall.cpp line 60      |
+| Smart Pointers              |     SDL_Fake.h line 97    |

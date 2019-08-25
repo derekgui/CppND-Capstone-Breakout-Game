@@ -3,8 +3,11 @@
 Controller::Controller()
     : m_isAvailable(true),
       m_keyStatus(KEYSTATUS::STAT_DEFAULT) {}
+
 bool Controller::isAvailable() const { return m_isAvailable; }
+
 KEYSTATUS Controller::keyStatus() const { return m_keyStatus; }
+
 void Controller::handleEvent()
 {
     while (SDL_PollEvent(&e) != 0)

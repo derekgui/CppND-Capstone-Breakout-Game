@@ -29,7 +29,7 @@ void MainWindow::init()
                                     m_screenWidth,
                                     m_screenHeight,
                                     SDL_WINDOW_SHOWN);
-        if (NULL == m_window)
+        if (nullptr == m_window)
             std::cerr << "Window could not be created! SDL_Error: "
                       << SDL_GetError() << "\n";
         else
@@ -42,7 +42,7 @@ bool MainWindow::isActive() const { return m_isActive; }
 void MainWindow::destroy()
 {
     SDL_DestroyWindow(m_window);
-    m_window = NULL;
+    m_window = nullptr;
     SDL_Quit();
     m_isActive = false;
 }

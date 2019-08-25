@@ -7,6 +7,7 @@
 #else
 #include "SDL2/SDL.h"
 #endif
+#include <memory>
 
 class MainWindow
 {
@@ -30,7 +31,7 @@ public:
 
 private:
     bool m_isActive{false};
-    SDL_Window *m_window{NULL};
+    SDL_Window *m_window{nullptr};
     int m_screenPosX;
     int m_screenPosY;
     int m_screenWidth;
