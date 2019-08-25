@@ -97,6 +97,3 @@ Here is a table of addressed rubics and corresponding files:
 | RAII                        | MainWindow/Renderer/Wall  |
 | Move semantics              |     Wall.cpp line 60      |
 | Smart Pointers              |     SDL_Fake.h line 97    |
-
-##Notice
-The Color helper code have adapted from the Chili Framework and used in this project, you can find orignal Framework from [here](https://github.com/planetchili/chili_framework)
