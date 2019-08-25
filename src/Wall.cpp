@@ -10,19 +10,12 @@ Wall::Wall()
     else
     {
         initBricks();
-        m_isLoaded = true;
     }
 }
 
 Wall::~Wall()
 {
     m_inf.close();
-    m_isLoaded = false;
-}
-
-bool Wall::isLoaded() const
-{
-    return m_isLoaded;
 }
 
 void Wall::initBricks()

@@ -32,5 +32,5 @@ void Paddle::update(const Controller &ctlr)
 void Paddle::shrink()
 {
     m_size = (Block().w / baseBlockWidth) / 2;
-    Block().w = m_size * baseBlockWidth;
+    Block().w = Block().w / 2;
 }

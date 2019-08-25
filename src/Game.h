@@ -14,6 +14,7 @@ public:
     Game(MainWindow &wnd);
     Game(const Game &) = delete;
     Game &operator=(const Game &) = delete;
+    bool isNotQuited() const;
     void Run();
 
 private:
@@ -30,6 +31,12 @@ private:
     Ball ball;
     Paddle paddle;
     Wall wall;
+    bool isTurnLost{false};
+    bool isGameStarted{false};
+    bool isGameOver{false};
+    int turnCount{3};
+
+private:
 };
 
 #endif

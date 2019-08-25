@@ -3,11 +3,14 @@
 
 int main()
 {
-    MainWindow wnd{SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, MainWindow::SCREEN_WIDTH, MainWindow::SCREEN_HEIGHT};
+    MainWindow wnd;
 
     Game theGame(wnd);
 
-    theGame.Run();
+    while (theGame.isNotQuited())
+    {
+        theGame.Run();
+    }
 
     return 0;
 }

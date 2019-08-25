@@ -27,7 +27,6 @@ public:
 private:
     static constexpr int brickWidth = BaseBlock::baseBlockWidth * 2;
     static constexpr int brickHeight = BaseBlock::baseBlockHeight;
-    bool m_isLoaded{false};
     std::ifstream m_inf;
     std::unordered_map<int, BaseBlock> m_bricks;
 };

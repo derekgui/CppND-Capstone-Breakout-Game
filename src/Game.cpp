@@ -3,23 +3,23 @@
 Game::Game(MainWindow &wnd)
     : wnd(wnd),
       rnd(wnd),
-      ball({MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT * 3 / 5, BaseBlock::baseBlockWidth, BaseBlock::baseBlockHeight}, Colors::Red),
+      ball({MainWindow::SCREEN_WIDTH / 2, MainWindow::SCREEN_HEIGHT * 3 / 5,
+            BaseBlock::baseBlockWidth,
+            BaseBlock::baseBlockHeight},
+           Colors::Red),
       paddle({(MainWindow::SCREEN_WIDTH / 2 - 3 * BaseBlock::baseBlockWidth),
               (MainWindow::SCREEN_HEIGHT * 5 / 6),
-              6 * BaseBlock::baseBlockWidth, BaseBlock::baseBlockHeight},
+              BaseBlock::baseBlockWidth * 6, BaseBlock::baseBlockHeight},
              Colors::Red)
 {
 }
 
 void Game::Run()
 {
-    while (controller.isAvailable())
-    {
-        rnd.clearScreen();
-        Update();
-        ComposeFrame();
-        rnd.updateScreen();
-    }
+    rnd.clearScreen();
+    Update();
+    ComposeFrame();
+    rnd.updateScreen();
 }
 
 void Game::Update()
@@ -32,45 +32,74 @@ void Game::Update()
 
     frame_start = SDL_GetTicks();
 
-    // Input, Update, Render - the main game loop.
     controller.handleEvent();
-
-    paddle.update(controller);
-    paddle.ClampToScreen();
-
-    if (ball.checkCollision(paddle))
+    // Input, Update, Render - the main game loop.
+    if (isGameStarted && !isGameOver && !isTurnLost)
     {
-        ball.update();
-    }
+        paddle.update(controller);
+        paddle.ClampToScreen();
 
-    wall.update(ball);
-    ball.update();
-
-    if ((ball.Block().y + ball.Block().h) > paddle.Block().y + paddle.Block().h)
-    {
+        if (ball.checkCollision(paddle))
+        {
+            ball.update();
         }
 
-    frame_end = SDL_GetTicks();
+        wall.update(ball);
+        ball.update();
 
-    // Keep track of how long each loop through the input/update/render cycle
-    // takes.
-    frame_count++;
-    frame_duration = frame_end - frame_start;
+        if ((ball.Block().y + ball.Block().h) > paddle.Block().y + paddle.Block().h)
+        {
+            //rest ball palce
+            ball.Block().x = MainWindow::SCREEN_WIDTH / 2;
+            ball.Block().y = MainWindow::SCREEN_HEIGHT * 3 / 5;
 
-    // After every second, update the window title.
-    if (frame_end - title_timestamp >= 1000)
-    {
-        wnd.UpdateWindowTitle(2, frame_count);
-        frame_count = 0;
-        title_timestamp = frame_end;
+            //reset paddle place
+            paddle.Block().x = MainWindow::SCREEN_WIDTH / 2 - 3 * BaseBlock::baseBlockWidth;
+            paddle.Block().y = MainWindow::SCREEN_HEIGHT * 5 / 6;
+
+            isTurnLost = true;
+            turnCount--;
+            if (turnCount == 0)
+            {
+                isGameOver = true;
+            }
+        }
+
+        if (ball.Block().y < MainWindow::SCREEN_HEIGHT / 2)
+        {
+            paddle.shrink();
+        }
+
+        frame_end = SDL_GetTicks();
+
+        // Keep track of how long each loop through the input/update/render cycle
+        // takes.
+        frame_count++;
+        frame_duration = frame_end - frame_start;
+
+        // After every second, update the window title.
+        if (frame_end - title_timestamp >= 1000)
+        {
+            wnd.UpdateWindowTitle(2, frame_count);
+            frame_count = 0;
+            title_timestamp = frame_end;
+        }
+
+        // If the time for this frame is too small (i.e. frame_duration is
+        // smaller than the target ms_per_frame), delay the loop to
+        // achieve the correct frame rate.
+        if (frame_duration < kMsPerFrame)
+        {
+            SDL_Delay(kFramesPerSecond - frame_duration);
+        }
     }
-
-    // If the time for this frame is too small (i.e. frame_duration is
-    // smaller than the target ms_per_frame), delay the loop to
-    // achieve the correct frame rate.
-    if (frame_duration < kMsPerFrame)
+    else
     {
-        SDL_Delay(kFramesPerSecond - frame_duration);
+        if (controller.keyStatus() == KEYSTATUS::SPACE_DOWN)
+        {
+            isGameStarted = true;
+            isTurnLost = false;
+        }
     }
 }
 
@@ -79,4 +108,10 @@ void Game::ComposeFrame()
     ball.drawSelf(rnd);
     wall.drawSelf(rnd);
     paddle.drawSelf(rnd);
+}
+
+//Game is Not Quited when controller not processed close window key.
+bool Game::isNotQuited() const
+{
+    return controller.isAvailable();
 }
