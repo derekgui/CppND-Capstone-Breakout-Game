@@ -27,14 +27,18 @@ bool Wall::isLoaded() const
 
 void Wall::initBricks()
 {
+    int brickType;
+    int brickIndex = 0;
+
+    const int posX_offset = 0;
+    const int posY_offset = 6;
+
     while (m_inf)
     {
-        int brickType;
-        int brickIndex = 0;
         m_inf >> brickType;
 
-        BaseBlock brick{{(brickIndex % 10) * brickWidth,
-                         (brickIndex / 10) * brickHeight,
+        BaseBlock brick{{(posX_offset + brickIndex % 20) * brickWidth,
+                         (posY_offset + brickIndex / 20) * brickHeight,
                          brickWidth,
                          brickHeight},
                         Colors::Black};
@@ -81,9 +85,17 @@ void Wall::update(Ball &ball)
     if (m_bricks.empty())
         return;
 
-    for (auto b : m_bricks)
+    auto it = m_bricks.begin();
+
+    while (it != m_bricks.end())
     {
-        if (ball.checkCollision(b.second))
-            b.second.blockColor() = Colors::Black;
+        if (ball.checkCollision(it->second))
+            break;
+        it++;
+    }
+
+    if (it != m_bricks.end())
+    {
+        m_bricks.erase(it);
     }
 }

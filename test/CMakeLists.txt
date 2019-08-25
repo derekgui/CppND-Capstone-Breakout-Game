@@ -15,8 +15,6 @@ elseif(${TESTING} STREQUAL "BaseBlock")
     add_executable(test testBaseBlock.cpp)
 elseif(${TESTING} STREQUAL "Ball")
     add_executable(test testBall.cpp)
-elseif(${TESTING} STREQUAL "Wall")
-    add_executable(test testWall.cpp)
 endif()
 
 target_link_libraries(test sdl_fake)

@@ -34,10 +34,21 @@ void Game::Update()
 
     // Input, Update, Render - the main game loop.
     controller.handleEvent();
-    ball.update();
+
     paddle.update(controller);
     paddle.ClampToScreen();
+
+    if (ball.checkCollision(paddle))
+    {
+        ball.update();
+    }
+
     wall.update(ball);
+    ball.update();
+
+    if ((ball.Block().y + ball.Block().h) > paddle.Block().y + paddle.Block().h)
+    {
+        }
 
     frame_end = SDL_GetTicks();
 
@@ -65,8 +76,7 @@ void Game::Update()
 
 void Game::ComposeFrame()
 {
-
-    wall.drawSelf(rnd);
     ball.drawSelf(rnd);
+    wall.drawSelf(rnd);
     paddle.drawSelf(rnd);
 }

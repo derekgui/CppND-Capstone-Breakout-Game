@@ -7,6 +7,8 @@ Ball::Ball(SDL_Rect brickBlock, Color c)
 
 bool Ball::checkCollision(const BaseBlock &block)
 {
+    isColliding = false;
+
     int ball_top = Block().y;
     int ball_bottom = Block().y + Block().h;
     int ball_left = Block().x;
@@ -18,15 +20,13 @@ bool Ball::checkCollision(const BaseBlock &block)
     int block_right = block.Block().x + block.Block().w;
 
     if (ball_bottom <= block_top)
-        return false;
+        return isColliding;
     if (ball_top >= block_bottom)
-        return false;
+        return isColliding;
     if (ball_right <= block_left)
-        return false;
+        return isColliding;
     if (ball_left >= block_right)
-        return false;
-    if (block.blockColor() == Colors::Black)
-        return false;
+        return isColliding;
 
     isColliding = true;
 
@@ -45,6 +45,12 @@ Vel &Ball::velocity()
 
 void Ball::update()
 {
+    if (isColliding)
+    {
+        isColliding = false;
+        m_vel.vy = -m_vel.vy;
+    }
+
     Block().x += m_vel.vx;
     Block().y += m_vel.vy;
 
@@ -71,12 +77,5 @@ void Ball::update()
     {
         Block().y = MainWindow::SCREEN_HEIGHT - 1 - Block().h;
         m_vel.vy = -m_vel.vy;
-    }
-
-    if (isColliding)
-    {
-        m_vel.vx = -m_vel.vx;
-        m_vel.vy = -m_vel.vy;
-        isColliding = false;
     }
 }
