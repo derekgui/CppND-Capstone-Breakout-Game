@@ -10,6 +10,8 @@ KEYSTATUS Controller::keyStatus() const { return m_keyStatus; }
 
 void Controller::handleEvent()
 {
+    std::lock_guard<std::mutex> myLock(mtx);
+
     while (SDL_PollEvent(&e) != 0)
     {
         if (e.type == SDL_QUIT)

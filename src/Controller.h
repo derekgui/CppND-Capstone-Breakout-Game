@@ -8,6 +8,8 @@
 #include "SDL2/SDL.h"
 #endif
 
+#include <mutex>
+
 enum class KEYSTATUS
 {
     LEFT_DOWN,
@@ -30,6 +32,7 @@ private:
     bool m_isAvailable;
     KEYSTATUS m_keyStatus;
     SDL_Event e;
+    std::mutex mtx;
 };
 
 #endif

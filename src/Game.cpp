@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <future>
 
 Game::Game(MainWindow &wnd)
     : wnd(wnd),
@@ -43,21 +44,23 @@ void Game::Run()
 
 void Game::Update()
 {
-    controller.handleEvent();
+    std::future<void> ftr = std::async(std::launch::deferred, &Controller::handleEvent, std::ref(controller));
 
     if (isGameStarted && !isGameOver && !isTurnLost)
     {
+
         paddle.update(controller);
+
         paddle.ClampToScreen();
+
+        wall.update(ball);
+
+        ball.update();
 
         if (ball.checkCollision(paddle))
         {
             ball.update();
         }
-
-        wall.update(ball);
-
-        ball.update();
 
         if (paddleMissedBall())
         {
@@ -92,6 +95,8 @@ void Game::Update()
             isTurnLost = false;
         }
     }
+
+    ftr.get();
 }
 
 void Game::ComposeFrame()
@@ -134,6 +139,7 @@ void Game::updateHitCount()
 {
     hitCount = wall.getBrokenBricks().yellow + wall.getBrokenBricks().green + wall.getBrokenBricks().orange + wall.getBrokenBricks().red;
 }
+
 void Game::updateBallSpeed()
 {
     int lastHitCount = hitCount;

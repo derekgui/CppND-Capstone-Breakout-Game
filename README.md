@@ -82,8 +82,8 @@ Here is a table of addressed rubics and corresponding files:
 |           Rubics            |           place           |
 |-----------------------------|:-------------------------:|
 | Functions and Controls      |         All files         |
-| Read and process from file  |       Wall.cpp line 4     |
-| User input and process      |  Controller.cpp line 11   |
+| Read and process from file  |       Wall.cpp L4         |
+| User input and process      |  Controller.cpp L11       |
 | Use classes                 |        All classes        |
 | Use access specifiers       |        All classes        |
 | Use member lists initialize |        All classes        |
@@ -91,12 +91,13 @@ Here is a table of addressed rubics and corresponding files:
 | Encapsulate                 |        All classes        |
 | Inheritance hierarchy       |       BaseBlock\Ball      |
 | Inheritance hierarchy       |       BaseBlock\Paddle    |
-| Function Overload           | BaseBlock line 9 14 24 29 |
+| Function Overload           | BaseBlock L9 L14 L24 L29  |
 | Use References              |        All classes        |
 | Use destructors             | MainWindow/Renderer/Wall  |
 | RAII                        | MainWindow/Renderer/Wall  |
-| Move semantics              |     Wall.cpp line 60      |
-| Smart Pointers              |     SDL_Fake.h line 97    |
+| Move semantics              |     Wall.cpp L60          |
+| Smart Pointers              |     SDL_Fake.h L97        |
+| Concurrency                 |Game.CPP L47 L99/Controller|
 
 ## Notice 
 The Color helper code have adapted from the Chili Framework and used in this project, you can find orignal Framework from [Here](https://github.com/planetchili/chili_framework)
