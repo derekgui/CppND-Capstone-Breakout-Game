@@ -10,14 +10,12 @@ Renderer::Renderer(const MainWindow &wnd)
 
 Renderer::~Renderer()
 {
-    SDL_DestroyRenderer(m_renderer);
-    m_renderer = nullptr;
     m_isActive = false;
 }
 
 void Renderer::init(const MainWindow &wnd)
 {
-    m_renderer = SDL_CreateRenderer(wnd.get(), -1, SDL_RENDERER_ACCELERATED);
+    m_renderer = Create_Renderer(wnd.get(), -1, SDL_RENDERER_ACCELERATED);
     if (nullptr == m_renderer)
         std::cerr << "Rendderer could not be created! SDL Error: "
                   << SDL_GetError() << "\n";
@@ -34,26 +32,33 @@ bool Renderer::isActive() const
 
 void Renderer::clearScreen()
 {
-    SDL_SetRenderDrawColor(m_renderer,
+    SDL_SetRenderDrawColor(m_renderer.get(),
                            Colors::Black.GetR(),
                            Colors::Black.GetG(),
                            Colors::Black.GetB(),
                            Colors::Black.GetA());
-    SDL_RenderClear(m_renderer);
+    SDL_RenderClear(m_renderer.get());
 }
 
 void Renderer::updateScreen()
 {
-    SDL_RenderPresent(m_renderer);
+    SDL_RenderPresent(m_renderer.get());
 }
 
 void Renderer::drawRect(const SDL_Rect *rect, Color c)
 {
-    SDL_SetRenderDrawColor(m_renderer, c.GetR(), c.GetG(), c.GetB(), c.GetA());
-    SDL_RenderFillRect(m_renderer, rect);
+    SDL_SetRenderDrawColor(m_renderer.get(), c.GetR(), c.GetG(), c.GetB(), c.GetA());
+    SDL_RenderFillRect(m_renderer.get(), rect);
 }
 
 SDL_Renderer *Renderer::get() const noexcept
 {
-    return m_renderer;
+    return m_renderer.get();
+}
+
+std::unique_ptr<SDL_Renderer, sdl_deleter> Renderer::Create_Renderer(SDL_Window *window, int index, Uint32 flags)
+{
+    return std::unique_ptr<SDL_Renderer, sdl_deleter>(
+        SDL_CreateRenderer(window, index, flags),
+        sdl_deleter());
 }
