@@ -9,6 +9,13 @@
 #endif
 #include <memory>
 
+struct sdl_deleter
+{
+    void operator()(SDL_Window *p) const { SDL_DestroyWindow(p); }
+    void operator()(SDL_Renderer *p) const { SDL_DestroyRenderer(p); }
+    void operator()(SDL_Texture *p) const { SDL_DestroyTexture(p); }
+};
+
 class MainWindow
 {
 public:
@@ -24,6 +31,8 @@ public:
     void destroy();
     SDL_Window *get() const noexcept;
     void UpdateWindowTitle(int score, int fps);
+    std::unique_ptr<SDL_Window, sdl_deleter>
+    create_window(char const *title, int x, int y, int w, int h, Uint32 flags);
 
 public:
     static constexpr int SCREEN_WIDTH = 640;
@@ -31,7 +40,7 @@ public:
 
 private:
     bool m_isActive{false};
-    SDL_Window *m_window{nullptr};
+    std::unique_ptr<SDL_Window, sdl_deleter> m_window;
     int m_screenPosX;
     int m_screenPosY;
     int m_screenWidth;
