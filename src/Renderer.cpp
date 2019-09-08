@@ -15,13 +15,17 @@ Renderer::~Renderer()
 
 void Renderer::init(const MainWindow &wnd)
 {
-    m_renderer = Create_Renderer(wnd.get(), -1, SDL_RENDERER_ACCELERATED);
-    if (nullptr == m_renderer)
-        std::cerr << "Rendderer could not be created! SDL Error: "
-                  << SDL_GetError() << "\n";
-    else
+    try
     {
+        m_renderer = Create_Renderer(wnd.get(), -1, SDL_RENDERER_ACCELERATED);
+        if (nullptr == m_renderer)
+            throw std::runtime_error(SDL_GetError());
         m_isActive = true;
+    }
+    catch (const std::runtime_error &e)
+    {
+        std::cerr << "Rendderer could not be created! SDL Error: "
+                  << e.what() << "\n";
     }
 }
 
