@@ -18,11 +18,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-        std::cerr << "SDL could not initialized! SDL_Error: "
-                  << SDL_GetError() << "\n";
-    else
+    try
     {
+        if (SDL_Init(SDL_INIT_VIDEO) < 0)
+            throw std::runtime_error(SDL_GetError());
         m_window = create_window("Breakout Game",
                                  m_screenPosX,
                                  m_screenPosY,
@@ -30,10 +29,18 @@ void MainWindow::init()
                                  m_screenHeight,
                                  SDL_WINDOW_SHOWN);
         if (nullptr == m_window)
-            std::cerr << "Window could not be created! SDL_Error: "
-                      << SDL_GetError() << "\n";
-        else
-            m_isActive = true;
+            throw windowCreationException(SDL_GetError());
+        m_isActive = true;
+    }
+    catch (const windowCreationException &e)
+    {
+        std::cerr << "Window could not be created! SDL_Error: "
+                  << e.what() << "\n";
+    }
+    catch (const std::runtime_error &e)
+    {
+        std::cerr << "SDL could not initialized! SDL_Error: "
+                  << e.what() << "\n";
     }
 }
 

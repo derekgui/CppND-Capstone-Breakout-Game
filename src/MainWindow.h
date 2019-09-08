@@ -19,6 +19,16 @@ struct sdl_deleter
 class MainWindow
 {
 public:
+    class windowCreationException : public std::runtime_error
+    {
+    public:
+        windowCreationException(const char *sdl_error)
+            : runtime_error(sdl_error)
+        {
+        }
+    };
+
+public:
     MainWindow(int screenPosX = SDL_WINDOWPOS_UNDEFINED,
                int screenPosY = SDL_WINDOWPOS_UNDEFINED,
                int screenWidth = SCREEN_WIDTH,
