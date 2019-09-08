@@ -3,13 +3,15 @@
 
 Wall::Wall()
 {
-    m_inf.open("../src/setting.dat");
-
-    if (!m_inf)
-        std::cerr << "Uable to load setting file!\n";
-    else
+    try
     {
+        m_inf.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        m_inf.open("../src/setting.dat");
         initBricks();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Uable to load setting file! Error Type: " << e.what() << std::endl;
     }
 }
 
